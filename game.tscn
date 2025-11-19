@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckp7nafthdys2"]
+
+[ext_resource type="PackedScene" uid="uid://y6a0fr15urbp" path="res://objects/buttons/buttons_manager.tscn" id="1_80nbo"]
+[ext_resource type="PackedScene" uid="uid://ovmkfttsg6vm" path="res://objects/math_area/math_area.tscn" id="2_e2o6t"]
+
+[node name="Game" type="Node2D"]
+
+[node name="ButtonsManager" parent="." instance=ExtResource("1_80nbo")]
+position = Vector2(79, 305)
+
+[node name="MathArea" parent="." instance=ExtResource("2_e2o6t")]
+position = Vector2(77, 105)
