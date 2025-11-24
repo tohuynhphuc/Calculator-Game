@@ -2,17 +2,22 @@
 
 [ext_resource type="Script" uid="uid://cpaw16ruswkla" path="res://objects/buttons/base_btn.gd" id="1_fl1qo"]
 
-[node name="base_btn" type="Node2D"]
+[node name="base_btn" type="PanelContainer"]
+offset_right = 8.0
+offset_bottom = 8.0
 script = ExtResource("1_fl1qo")
 
 [node name="Button" type="Button" parent="."]
-offset_right = 100.0
-offset_bottom = 70.0
+custom_minimum_size = Vector2(120, 70)
+layout_mode = 2
 
 [node name="Label" type="Label" parent="Button"]
-layout_mode = 0
-offset_right = 100.0
-offset_bottom = 70.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_font_sizes/font_size = 49
 text = "#"
 horizontal_alignment = 1

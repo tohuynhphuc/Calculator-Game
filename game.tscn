@@ -1,12 +1,21 @@
 [gd_scene load_steps=3 format=3 uid="uid://ckp7nafthdys2"]
 
 [ext_resource type="PackedScene" uid="uid://y6a0fr15urbp" path="res://objects/buttons/buttons_manager.tscn" id="1_80nbo"]
-[ext_resource type="PackedScene" uid="uid://ovmkfttsg6vm" path="res://objects/math_area/math_area.tscn" id="2_e2o6t"]
+[ext_resource type="PackedScene" uid="uid://bl67wqq1fxyor" path="res://ui.tscn" id="1_e2o6t"]
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="ButtonsManager" parent="." instance=ExtResource("1_80nbo")]
-position = Vector2(79, 305)
+offset_left = 79.0
+offset_top = 305.0
+offset_right = 79.0
+offset_bottom = 305.0
 
-[node name="MathArea" parent="." instance=ExtResource("2_e2o6t")]
-position = Vector2(77, 105)
+[node name="UI" parent="." instance=ExtResource("1_e2o6t")]
+layout_mode = 1

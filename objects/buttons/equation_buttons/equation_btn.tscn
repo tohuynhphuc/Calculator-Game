@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfyd76cs1cw83"]
+
+[ext_resource type="PackedScene" uid="uid://8h5l3r7g8np4" path="res://objects/buttons/base_btn.tscn" id="1_kbvsr"]
+[ext_resource type="Script" uid="uid://dus18owr1aukr" path="res://objects/buttons/equation_buttons/equation_btn.gd" id="2_3lgat"]
+
+[node name="equation_btn" instance=ExtResource("1_kbvsr")]
+script = ExtResource("2_3lgat")
+
+[node name="Button" parent="." index="0"]
+layout_mode = 0
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

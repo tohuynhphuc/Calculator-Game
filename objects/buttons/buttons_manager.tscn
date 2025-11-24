@@ -2,14 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bsrq7epkhx0m5" path="res://objects/buttons/buttons_manager.gd" id="1_18tkk"]
 
-[node name="ButtonsManager" type="Node2D"]
+[node name="ButtonsManager" type="Control" node_paths=PackedStringArray("number_grid", "equation_grid")]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_18tkk")
-
-[node name="NumberContainer" type="GridContainer" parent="."]
-offset_right = 1034.0
-offset_bottom = 265.0
-columns = 5
-
-[node name="EquationContainer" type="GridContainer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+number_grid = NodePath("")
+equation_grid = NodePath("")

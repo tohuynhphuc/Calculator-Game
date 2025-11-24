@@ -2,6 +2,7 @@ class_name BaseBtn
 extends Node2D
 
 enum btn_type {
+	BASE,
 	NUMBER,
 	EQUATION
 }
@@ -14,9 +15,10 @@ var value: String
 
 const BTN_SCENE = preload("res://objects/buttons/base_btn.tscn")
 
-static func new_btn(num: int) -> NumberBtn:
-	var new_btn: NumberBtn = BTN_SCENE.instantiate()
-	new_btn.number = num
+static func new_btn(_value: String, _type: btn_type) -> BaseBtn:
+	var new_btn: BaseBtn = BTN_SCENE.instantiate()
+	new_btn.set_value(_value)
+	new_btn.set_type(_type)
 	return new_btn
 
 
@@ -24,11 +26,20 @@ func set_value(new_value: String) -> void:
 	value = new_value
 
 
+func set_type(new_type: btn_type) -> void:
+	type = new_type
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	label.text = value
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	if label.text != value:
+		label.text = value
+
+
+func get_value() -> String:
+	return value

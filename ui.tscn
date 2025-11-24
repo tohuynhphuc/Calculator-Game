@@ -1,0 +1,76 @@
+[gd_scene load_steps=3 format=3 uid="uid://bl67wqq1fxyor"]
+
+[ext_resource type="PackedScene" uid="uid://ovmkfttsg6vm" path="res://objects/math_area/math_area.tscn" id="1_27fn8"]
+[ext_resource type="Script" uid="uid://cpaw16ruswkla" path="res://objects/buttons/base_btn.gd" id="2_nltto"]
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="LeftPanel" type="PanelContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="LeftSide" type="VBoxContainer" parent="HBoxContainer/LeftPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ProgressBar" type="ProgressBar" parent="HBoxContainer/LeftPanel/LeftSide"]
+layout_mode = 2
+
+[node name="MathArea" parent="HBoxContainer/LeftPanel/LeftSide" instance=ExtResource("1_27fn8")]
+layout_mode = 2
+
+[node name="NumberContainer" type="GridContainer" parent="HBoxContainer/LeftPanel/LeftSide"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 8
+script = ExtResource("2_nltto")
+
+[node name="RightPanel" type="PanelContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/RightPanel"]
+layout_mode = 2
+
+[node name="Money" type="Control" parent="HBoxContainer/RightPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+
+[node name="MoneyText" type="Label" parent="HBoxContainer/RightPanel/VBoxContainer/Money"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.5
+offset_top = -11.1667
+offset_right = 20.5
+offset_bottom = 11.1667
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 41
+text = "$###"
+
+[node name="EquationContainer" type="GridContainer" parent="HBoxContainer/RightPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 3
