@@ -6,7 +6,4 @@
 [node name="number_btn" instance=ExtResource("1_pgaxo")]
 script = ExtResource("2_36fk0")
 
-[node name="Button" parent="." index="0"]
-layout_mode = 0
-
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

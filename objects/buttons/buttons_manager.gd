@@ -1,9 +1,10 @@
-extends Node2D
+extends Control
 
-@export var number_grid: GridContainer
-@export var equation_grid: GridContainer
+@export var ui_controller: UI_Controller
 
-var number_button_arr: Array[String] = ["1", "2", "3", "4", "5", "6"]
+var all_buttons_arr: Array[String]
+
+var number_button_arr: Array[String] = []
 var equation_button_arr: Array[String] = ["+", "-", "*", "/", "(", ")"]
 
 #@export var grid_size_x = 120
@@ -13,22 +14,43 @@ var equation_button_arr: Array[String] = ["+", "-", "*", "/", "(", ")"]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	generate_all_buttons()
+	number_button_arr = get_k_random_buttons(5)
+	print(number_button_arr)
+	
 	for i in number_button_arr.size():
 		var button = NumberBtn.new_btn(str(number_button_arr[i]))
-		#button.position = calculate_grid_position(i, number_grid_cols, grid_size_x, grid_size_y)
-		number_grid.add_child(button)
+		ui_controller.number_container_add_button(button)
 		print(button.get_value())
 	
 	for i in equation_button_arr.size():
 		var button = EquationBtn.new_btn(str(equation_button_arr[i]))
-		#button.position = calculate_grid_position(i, equation_grid_cols, grid_size_x, grid_size_y)
-		equation_grid.add_child(button)
+		ui_controller.equation_container_add_button(button)
 		print(button.get_value())
+	
+	ui_controller.equation_container_add_button(DeleteBtn.new_btn("DEL"))
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+
+func generate_all_buttons() -> void:
+	for i in range(50):
+		all_buttons_arr.append(str(i + 1))
+
+
+func get_k_random_buttons(k: int) -> Array:
+	if k <= 0:
+		return []
+	if k > all_buttons_arr.size():
+		k = all_buttons_arr.size()
+
+	var temp = all_buttons_arr.duplicate()
+	temp.shuffle()
+
+	return temp.slice(0, k)
 
 
 func calculate_grid_position(idx: int, cols: int, size_x: int, size_y: int) -> Vector2:

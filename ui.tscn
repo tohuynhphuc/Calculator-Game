@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://bl67wqq1fxyor"]
 
 [ext_resource type="PackedScene" uid="uid://ovmkfttsg6vm" path="res://objects/math_area/math_area.tscn" id="1_27fn8"]
-[ext_resource type="Script" uid="uid://cpaw16ruswkla" path="res://objects/buttons/base_btn.gd" id="2_nltto"]
+[ext_resource type="Script" uid="uid://cuxbnwfgdua3b" path="res://ui.gd" id="1_nltto"]
 
-[node name="UI" type="Control"]
+[node name="UI" type="Control" node_paths=PackedStringArray("number_container", "equation_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,6 +12,9 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("1_nltto")
+number_container = NodePath("HBoxContainer/LeftPanel/LeftSide/NumberContainer")
+equation_container = NodePath("HBoxContainer/RightPanel/RightSide/EquationContainer")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -36,25 +39,27 @@ layout_mode = 2
 
 [node name="MathArea" parent="HBoxContainer/LeftPanel/LeftSide" instance=ExtResource("1_27fn8")]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="NumberContainer" type="GridContainer" parent="HBoxContainer/LeftPanel/LeftSide"]
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 3
-columns = 8
-script = ExtResource("2_nltto")
+size_flags_stretch_ratio = 0.7
+columns = 6
 
 [node name="RightPanel" type="PanelContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/RightPanel"]
+[node name="RightSide" type="VBoxContainer" parent="HBoxContainer/RightPanel"]
 layout_mode = 2
 
-[node name="Money" type="Control" parent="HBoxContainer/RightPanel/VBoxContainer"]
+[node name="Money" type="Control" parent="HBoxContainer/RightPanel/RightSide"]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 
-[node name="MoneyText" type="Label" parent="HBoxContainer/RightPanel/VBoxContainer/Money"]
+[node name="MoneyText" type="Label" parent="HBoxContainer/RightPanel/RightSide/Money"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -70,7 +75,8 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 41
 text = "$###"
 
-[node name="EquationContainer" type="GridContainer" parent="HBoxContainer/RightPanel/VBoxContainer"]
+[node name="EquationContainer" type="GridContainer" parent="HBoxContainer/RightPanel/RightSide"]
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 3
-columns = 3
+columns = 2

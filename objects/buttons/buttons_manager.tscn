@@ -2,9 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bsrq7epkhx0m5" path="res://objects/buttons/buttons_manager.gd" id="1_18tkk"]
 
-[node name="ButtonsManager" type="Control" node_paths=PackedStringArray("number_grid", "equation_grid")]
+[node name="ButtonsManager" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_18tkk")
-number_grid = NodePath("")
-equation_grid = NodePath("")

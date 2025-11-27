@@ -6,7 +6,4 @@
 [node name="equation_btn" instance=ExtResource("1_kbvsr")]
 script = ExtResource("2_3lgat")
 
-[node name="Button" parent="." index="0"]
-layout_mode = 0
-
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

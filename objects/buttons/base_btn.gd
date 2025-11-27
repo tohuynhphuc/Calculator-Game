@@ -1,10 +1,12 @@
 class_name BaseBtn
-extends Node2D
+extends Control
 
 enum btn_type {
 	BASE,
 	NUMBER,
-	EQUATION
+	EQUATION,
+	DELETE,
+	ALL_CLEAR
 }
 
 var type : btn_type

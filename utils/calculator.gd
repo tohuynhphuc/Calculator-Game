@@ -23,6 +23,48 @@ static func evaluate(expression: String) -> Variant:
 	return result
 
 
+static func evaluate_tokens(tokens: Array) -> Variant:
+	print(tokens)
+
+	if tokens.size() == 0:
+		return null
+
+	# Reject things like ["1","2"]
+	if not validate_raw_tokens(tokens):
+		return null
+
+	var processed = _process_unary_and_implicit(tokens)
+	if processed.size() == 0:
+		return null
+
+	var rpn = infix_to_postfix(processed)
+	if rpn == null or rpn.size() == 0:
+		return null
+
+	var result = evaluate_postfix(rpn)
+	if result == null:
+		return null
+
+	return result
+
+
+
+static func validate_raw_tokens(tokens: Array) -> bool:
+	if tokens.size() == 0:
+		return false
+
+	for i in tokens.size():
+		var t = tokens[i]
+
+		# A number
+		if t.is_valid_float():
+			# Look ahead: next token exists and is also a number?
+			if i + 1 < tokens.size() and tokens[i+1].is_valid_float():
+				return false  # two consecutive numbers → invalid
+
+	return true
+
+
 static func tokenize(expr: String) -> Array:
 	print(expr)
 	var tokens: Array = []
@@ -65,8 +107,7 @@ static func tokenize(expr: String) -> Array:
 
 		push_error("Invalid token at index %d: '%s'" % [i, c])
 		return []
-
-	tokens = _process_unary_and_implicit(tokens)
+	
 	return tokens
 
 
@@ -188,15 +229,12 @@ static func infix_to_postfix(tokens: Array) -> Variant:
 	var stack = []
 
 	for token in tokens:
-		# Is number?
 		if token.is_valid_float():
 			output.append(token)
 		
-		# Is function?
 		elif Operators.FUNCTIONS.has(token):
 			stack.append(token)
 
-		# Is operator?
 		elif Operators.OPERATORS.has(token):
 			var o1 = token
 			while stack.size() > 0:
@@ -208,7 +246,7 @@ static func infix_to_postfix(tokens: Array) -> Variant:
 					var assoc = Operators.OPERATORS[o1].assoc
 
 					var cond_left  = assoc == "left"  and p1 <= p2
-					var cond_right = assoc == "right" and p1 <  p2
+					var cond_right = p1 <  p2
 
 					if cond_left or cond_right:
 						output.append(stack.pop_back())
@@ -216,14 +254,13 @@ static func infix_to_postfix(tokens: Array) -> Variant:
 						break
 				else:
 					break
-
 			stack.append(o1)
 
-		# Left parenthesis
+		elif token == ",":
+			pass
 		elif token == "(":
 			stack.append(token)
 
-		# Right parenthesis
 		elif token == ")":
 			var found_left_paren = false
 			while stack.size() > 0:
@@ -235,16 +272,14 @@ static func infix_to_postfix(tokens: Array) -> Variant:
 
 			if not found_left_paren:
 				return null  # invalid parentheses
-
-			# If a function is on top, pop it too
 			if stack.size() > 0 and Operators.FUNCTIONS.has(stack[-1]):
 				output.append(stack.pop_back())
 
 		else:
 			return null  # unknown token
 
-	# Pop all remaining operators
-	for op in stack:
+	while not stack.is_empty():
+		var op = stack.pop_back()
 		if op == "(" or op == ")":
 			return null  # mismatched parentheses
 		output.append(op)

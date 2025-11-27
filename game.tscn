@@ -11,11 +11,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ButtonsManager" parent="." instance=ExtResource("1_80nbo")]
+[node name="ButtonsManager" parent="." node_paths=PackedStringArray("ui_controller") instance=ExtResource("1_80nbo")]
 offset_left = 79.0
 offset_top = 305.0
 offset_right = 79.0
 offset_bottom = 305.0
+ui_controller = NodePath("../UI")
 
 [node name="UI" parent="." instance=ExtResource("1_e2o6t")]
 layout_mode = 1
