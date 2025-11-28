@@ -12,7 +12,7 @@ func _ready() -> void:
 	EventBus.equation_button_clicked.connect(on_buttons_clicked)
 	EventBus.delete_button_clicked.connect(on_delete_buttons_clicked)
 	
-	result.text = str(GameManager.generatedTarget)
+	target.text = str(GameManager.generatedTarget)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

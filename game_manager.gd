@@ -16,3 +16,4 @@ func _process(delta: float) -> void:
 
 func generateTargetNumber() -> void:
 	generatedTarget = randi() % (maxValue - minValue + 1) + minValue
+	print(generatedTarget)

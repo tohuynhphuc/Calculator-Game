@@ -3,8 +3,9 @@
 [ext_resource type="Script" uid="uid://cpaw16ruswkla" path="res://objects/buttons/base_btn.gd" id="1_fl1qo"]
 
 [node name="base_btn" type="PanelContainer"]
-offset_right = 8.0
-offset_bottom = 8.0
+custom_minimum_size = Vector2(200, 200)
+offset_right = 120.0
+offset_bottom = 70.0
 script = ExtResource("1_fl1qo")
 
 [node name="Button" type="Button" parent="."]

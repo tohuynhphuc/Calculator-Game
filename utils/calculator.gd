@@ -24,8 +24,6 @@ static func evaluate(expression: String) -> Variant:
 
 
 static func evaluate_tokens(tokens: Array) -> Variant:
-	print(tokens)
-
 	if tokens.size() == 0:
 		return null
 
@@ -66,7 +64,6 @@ static func validate_raw_tokens(tokens: Array) -> bool:
 
 
 static func tokenize(expr: String) -> Array:
-	print(expr)
 	var tokens: Array = []
 	var i := 0
 	expr = expr.strip_edges()
@@ -126,18 +123,17 @@ static func _is_alnum(c: String) -> bool:
 # ---- Unary minus + implicit multiplication ----------------------------------
 
 static func _process_unary_and_implicit(tokens: Array) -> Array:
-	print(tokens)
 	var out: Array = []
 	var prev = null
 
 	for t in tokens:
-		var is_op := ["+", "-", "*", "/", "^", "!"].has(t)
+		var is_op := Operators.OPERATORS.has(t)
 		var is_number: bool = t.is_valid_float()
-		var is_ident: bool = not is_number and not is_op and not ["(", ")", ","].has(t)
+		var is_ident: bool = _is_identifier(t)
 
 		# UNARY MINUS
 		if t == "-":
-			if prev == null or prev in ["+", "-", "*", "/", "^", "(", ","]:
+			if prev == null or (Operators.OPERATORS.has(prev) or prev == "(" or prev == ","):
 				out.append("u-")
 			else:
 				out.append("-")
@@ -164,67 +160,31 @@ static func _process_unary_and_implicit(tokens: Array) -> Array:
 	return out
 
 
+#static func _is_identifier(t: String) -> bool:
+	#if t.is_valid_float(): return false
+	#if t in ["+", "-", "*", "/", "^", "!", "u-", "(", ")", ","]: return false
+	#return true
 static func _is_identifier(t: String) -> bool:
-	if t.is_valid_float(): return false
-	if t in ["+", "-", "*", "/", "^", "!", "u-", "(", ")", ","]: return false
+	if t.is_valid_float():
+		return false
+
+	# Parentheses / commas are NOT identifiers
+	if t == "(" or t == ")" or t == ",":
+		return false
+
+	# If it matches an operator token → NOT identifier
+	if Operators.OPERATORS.has(t):
+		return false
+
+	# If it matches a registered function → NOT identifier
+	if Operators.FUNCTIONS.has(t):
+		return false
+
+	# Everything else is treated as identifier
 	return true
 
 
-
-#static func preprocess_tokens(tokens: Array) -> Variant:
-	#var result: Array = []
-	#var last: String = ""  # previous token
-#
-	#for token in tokens:
-		## --- DETECT UNARY MINUS ---
-		#if token == "-":
-			#var is_unary = false
-#
-			#if last == null:
-				#is_unary = true
-			#elif Operators.OPERATORS.has(last):
-				#is_unary = true
-			#elif last == "(":
-				#is_unary = true
-#
-			#if is_unary:
-				#result.append("u-")
-			#else:
-				#result.append("-")
-#
-		## --- IMPLICIT MULTIPLICATION DETECTION ---
-		#else:
-			#if last != null:
-				#var mul_needed = false
-#
-				#var last_is_number = last.is_valid_float()
-				#var last_is_func = Operators.FUNCTIONS.has(last)
-				#var last_is_rparen = last == ")"
-#
-				#var token_is_number = token.is_valid_float()
-				#var token_is_func = Operators.FUNCTIONS.has(token)
-				#var token_is_lparen = token == "("
-#
-				## Cases where we insert *
-				#if last_is_number and token_is_lparen: mul_needed = true
-				#elif last_is_number and token_is_func: mul_needed = true
-				#elif last_is_rparen and token_is_lparen: mul_needed = true
-				#elif last_is_rparen and token_is_func: mul_needed = true
-				#elif last_is_func and token_is_lparen: mul_needed = true
-				#elif last_is_number and token_is_number: mul_needed = true  # only if you allow "2 3"
-#
-				#if mul_needed:
-					#result.append("*")
-#
-			#result.append(token)
-#
-		#last = result[-1]
-#
-	#return result
-
-
 static func infix_to_postfix(tokens: Array) -> Variant:
-	print(tokens)
 	var output = []
 	var stack = []
 
@@ -288,7 +248,6 @@ static func infix_to_postfix(tokens: Array) -> Variant:
 
 
 static func evaluate_postfix(postfix: Array) -> Variant:
-	print(postfix)
 	if postfix == [null]:
 		return null
 
