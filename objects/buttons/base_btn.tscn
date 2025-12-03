@@ -1,16 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://8h5l3r7g8np4"]
+[gd_scene load_steps=3 format=3 uid="uid://8h5l3r7g8np4"]
 
 [ext_resource type="Script" uid="uid://cpaw16ruswkla" path="res://objects/buttons/base_btn.gd" id="1_fl1qo"]
 
-[node name="base_btn" type="PanelContainer"]
-custom_minimum_size = Vector2(200, 200)
-offset_right = 120.0
-offset_bottom = 70.0
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lvumg"]
+
+[node name="base_btn" type="PanelContainer" node_paths=PackedStringArray("label")]
+offset_right = 8.0
+offset_bottom = 8.0
 script = ExtResource("1_fl1qo")
+label = NodePath("Button/Label")
 
 [node name="Button" type="Button" parent="."]
-custom_minimum_size = Vector2(120, 70)
+custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxEmpty_lvumg")
 
 [node name="Label" type="Label" parent="Button"]
 layout_mode = 1
@@ -19,7 +23,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 49
+theme_override_font_sizes/font_size = 40
 text = "#"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

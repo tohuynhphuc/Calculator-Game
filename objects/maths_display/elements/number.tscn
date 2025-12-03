@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6tgm2fe83d4u"]
+
+[ext_resource type="Script" uid="uid://dyao1s67407lp" path="res://objects/maths_display/elements/number.gd" id="1_ftmjb"]
+
+[node name="Number" type="PanelContainer" node_paths=PackedStringArray("label")]
+offset_right = 86.0
+offset_bottom = 55.8333
+size_flags_horizontal = 0
+script = ExtResource("1_ftmjb")
+label = NodePath("Label")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1

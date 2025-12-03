@@ -1,8 +1,8 @@
 extends Control
 class_name UI_Controller
 
-@export var number_container: GridContainer
-@export var equation_container: GridContainer
+@export var number_container: Container
+@export var equation_container: Container
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -20,3 +20,7 @@ func number_container_add_button(btn: BaseBtn) -> void:
 
 func equation_container_add_button(btn: BaseBtn) -> void:
 	equation_container.add_child(btn)
+
+
+func _on_get_tree_button_pressed() -> void:
+	GameManager.getTreeFromExpression()[0].print_tree()

@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://da0om7852hykm"]
+
+[ext_resource type="Script" uid="uid://b11v3bawo62wo" path="res://objects/maths_display/elements/brackets.gd" id="1_n5w4a"]
+
+[node name="Brackets" type="PanelContainer" node_paths=PackedStringArray("container")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_n5w4a")
+container = NodePath("HFlowContainer/InsideBracket")
+
+[node name="HFlowContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+alignment = 1
+
+[node name="LeftBracket" type="Label" parent="HFlowContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "("
+
+[node name="InsideBracket" type="HBoxContainer" parent="HFlowContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="RightBracket" type="Label" parent="HFlowContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = ")"

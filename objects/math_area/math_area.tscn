@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://ovmkfttsg6vm"]
+[gd_scene load_steps=3 format=3 uid="uid://ovmkfttsg6vm"]
 
 [ext_resource type="Script" uid="uid://bomksf8o6q2j1" path="res://objects/math_area/math_area.gd" id="1_6qtjq"]
+[ext_resource type="PackedScene" uid="uid://dfyif2jubwtty" path="res://objects/maths_display/maths_display.tscn" id="2_3yat6"]
 
 [node name="MathArea" type="PanelContainer" node_paths=PackedStringArray("expression", "result", "target")]
 offset_right = 800.0
@@ -35,6 +36,9 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 8.0
+
+[node name="MathsDisplay" parent="MarginContainer/VBoxContainer/FullExpression/PanelContainer" instance=ExtResource("2_3yat6")]
+layout_mode = 2
 
 [node name="Expression" type="Label" parent="MarginContainer/VBoxContainer/FullExpression/PanelContainer"]
 custom_minimum_size = Vector2(400, 0)

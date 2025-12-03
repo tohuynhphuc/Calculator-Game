@@ -16,4 +16,7 @@ func _ready() -> void:
 
 
 func _on_button_pressed() -> void:
-	EventBus.delete_button_clicked.emit(false)
+	EventBus.delete_button_clicked.emit(type == btn_type.ALL_CLEAR)
+	
+	print("Button pressed " + label.text)
+	EventBus.equation_changed.emit()

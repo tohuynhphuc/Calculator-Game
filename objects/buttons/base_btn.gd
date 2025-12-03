@@ -6,14 +6,15 @@ enum btn_type {
 	NUMBER,
 	EQUATION,
 	DELETE,
-	ALL_CLEAR
+	ALL_CLEAR,
+	ARROW_LEFT,
+	ARROW_RIGHT
 }
 
 var type : btn_type
 var value: String
 
-@onready var math_area = $MathArea
-@onready var label = $Button/Label
+@export var label: Label
 
 const BTN_SCENE = preload("res://objects/buttons/base_btn.tscn")
 
@@ -45,3 +46,7 @@ func _process(delta: float) -> void:
 
 func get_value() -> String:
 	return value
+
+
+func _on_button_pressed() -> void:
+	pass # Replace with function body.

@@ -42,12 +42,12 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="NumberContainer" type="GridContainer" parent="HBoxContainer/LeftPanel/LeftSide"]
+[node name="NumberContainer" type="HBoxContainer" parent="HBoxContainer/LeftPanel/LeftSide"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 3
+size_flags_vertical = 6
 size_flags_stretch_ratio = 0.25
-columns = 6
+theme_override_constants/separation = 20
 
 [node name="RightPanel" type="PanelContainer" parent="HBoxContainer"]
 layout_mode = 2
@@ -76,8 +76,16 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 41
 text = "$###"
 
-[node name="EquationContainer" type="GridContainer" parent="HBoxContainer/RightPanel/RightSide"]
+[node name="GetTreeButton" type="Button" parent="HBoxContainer/RightPanel/RightSide"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 3
-columns = 2
+theme_override_font_sizes/font_size = 56
+text = "Print Tree"
+
+[node name="EquationContainer" type="HFlowContainer" parent="HBoxContainer/RightPanel/RightSide"]
+layout_mode = 2
+alignment = 1
+
+[node name="ArrowKeysContainer" type="HBoxContainer" parent="HBoxContainer/RightPanel/RightSide"]
+layout_mode = 2
+
+[connection signal="pressed" from="HBoxContainer/RightPanel/RightSide/GetTreeButton" to="." method="_on_get_tree_button_pressed"]

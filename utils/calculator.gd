@@ -144,7 +144,8 @@ static func _process_unary_and_implicit(tokens: Array) -> Array:
 		var insert_mul := false
 
 		if prev != null:
-			var prev_can_end = (prev.is_valid_float() or _is_identifier(prev) or prev == ")")
+			var prev_can_end = (prev.is_valid_float() or _is_identifier(prev)
+					or prev == ")" or Operators.POSTFIX.has(prev))
 			var t_can_start = (is_number or is_ident or t == "(")
 
 			if prev_can_end and t_can_start:

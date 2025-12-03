@@ -17,6 +17,8 @@ static var OPERATORS = {
 	"!":  {"precedence": 4, "assoc": "right", "arity": 1, "func": func(a): return factorial(a)},
 }
 
+static var POSTFIX = ["!"]
+
 # Registered functions (min, max, sin, cos, tan, etc)
 static var FUNCTIONS = {
 	"sin": func(a): return sin(a),

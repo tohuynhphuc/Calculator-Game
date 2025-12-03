@@ -7,28 +7,22 @@ var all_buttons_arr: Array[String]
 var number_button_arr: Array[String] = []
 var equation_button_arr: Array[String] = ["+", "-", "*", "/", "(", ")"]
 
-#@export var grid_size_x = 120
-#@export var grid_size_y = 90
-#@export var number_grid_cols = 5
-#@export var equation_grid_cols = 3
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	generate_all_buttons()
 	number_button_arr = get_k_random_buttons(5)
-	print(number_button_arr)
 	
 	for i in number_button_arr.size():
 		var button = NumberBtn.new_btn(str(number_button_arr[i]))
 		ui_controller.number_container_add_button(button)
-		print(button.get_value())
 	
 	for i in equation_button_arr.size():
 		var button = EquationBtn.new_btn(str(equation_button_arr[i]))
 		ui_controller.equation_container_add_button(button)
-		print(button.get_value())
 	
 	ui_controller.equation_container_add_button(DeleteBtn.new_btn("DEL"))
+	ui_controller.equation_container_add_button(DeleteBtn.new_btn("AC", BaseBtn.btn_type.ALL_CLEAR))
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

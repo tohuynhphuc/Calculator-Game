@@ -1,0 +1,23 @@
+class_name LeftArrowBtn
+extends BaseBtn
+
+
+const LEFT_ARROW_BTN_SCENE = preload("res://objects/buttons/arrow_keys_buttons/left_arrow_btn.tscn")
+
+static func new_btn(_value: String, _type: btn_type = btn_type.ARROW_LEFT) -> LeftArrowBtn:
+	var new_btn: LeftArrowBtn = LEFT_ARROW_BTN_SCENE.instantiate()
+	new_btn.set_value(_value)
+	new_btn.set_type(_type)
+	return new_btn
+	
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass
+
+
+func _on_button_pressed() -> void:
+	EventBus.arrow_button_clicked.emit(type == btn_type.ARROW_LEFT)
+	
+	print("Button pressed " + label.text)
+	EventBus.equation_changed.emit()

@@ -21,11 +21,12 @@ func _process(delta: float) -> void:
 	for char in characters:
 		text += char
 	expression.text = text
+	GameManager.expression = characters
 	
 	if Calculator.evaluate_tokens(characters) == null:
 		result.text = ""
 	else:
-		result.text = str(Calculator.evaluate_tokens(characters))
+		result.text = str(snapped(Calculator.evaluate_tokens(characters), 0.01))
 	
 
 
@@ -42,7 +43,6 @@ func remove_characters(is_all: bool = false) -> void:
 
 func on_buttons_clicked(value: String) -> void:
 	add_characters(value)
-	print(value)
 
 
 func on_delete_buttons_clicked(is_all: bool) -> void:
