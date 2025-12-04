@@ -13,6 +13,7 @@ enum NODE_TYPE {
 var children: Array[TreeNode] = []
 var value = null
 var type: NODE_TYPE
+var is_closed_by_user: bool = false
 
 func add_child(child_value, child_type) -> void:
 	var new_node: TreeNode = TreeNode.new()

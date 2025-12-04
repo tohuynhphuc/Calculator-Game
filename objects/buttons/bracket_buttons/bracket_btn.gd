@@ -29,8 +29,6 @@ func _ready() -> void:
 func _on_button_pressed() -> void:
 	EventBus.equation_button_clicked.emit(value)
 	GameManager.move_cursor_right()
-	if is_left:
-		EventBus.equation_button_clicked.emit(brackets_pair[value])
 	print("Button pressed " + label.text)
 	print("Cursor position " + str(GameManager.cursor_position))
 	EventBus.equation_changed.emit()

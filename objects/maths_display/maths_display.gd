@@ -71,27 +71,32 @@ func insert_at_virtual_index(root: Node, to_be_insert: Node, id: int) -> void:
 
 func from_tree_to_nodes(root: TreeNode) -> Array:
 	var objects: Array[Control] = []
+	
 	for child in root.children:
 		if child.type == TreeNode.NODE_TYPE.NUMBER:
 			var number = _number.instantiate()
 			number.set_value(int(child.value))
 			number.update()
 			objects.append(number)
+		
 		elif child.type == TreeNode.NODE_TYPE.OPERATOR:
 			var operator = _operator.instantiate()
 			operator.value = child.value
 			operator.update()
 			objects.append(operator)
+		
 		elif child.type == TreeNode.NODE_TYPE.FUNCTION:
 			var function = _operator.instantiate()
 			function.value = child.value
 			function.update()
 			objects.append(function)
+		
 		elif child.type == TreeNode.NODE_TYPE.BRACKET:
 			var bracket = _brackets.instantiate()
 			var inside_bracket = from_tree_to_nodes(child)
 			print(inside_bracket)
 			bracket.expression = inside_bracket
-			bracket.update()
+			bracket.update(child.is_closed_by_user)
 			objects.append(bracket)
+	
 	return objects

@@ -241,8 +241,10 @@ static func infix_to_postfix(tokens: Array) -> Variant:
 
 	while not stack.is_empty():
 		var op = stack.pop_back()
-		if op == "(" or op == ")":
-			return null  # mismatched parentheses
+		if op == "(":
+			continue # ignore not closed parentheses (considered valid)
+		elif op == ")":
+			return null
 		output.append(op)
 
 	return output

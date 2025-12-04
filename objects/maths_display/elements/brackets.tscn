@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b11v3bawo62wo" path="res://objects/maths_display/elements/brackets.gd" id="1_n5w4a"]
 
-[node name="Brackets" type="PanelContainer" node_paths=PackedStringArray("container")]
+[node name="Brackets" type="PanelContainer" node_paths=PackedStringArray("container", "left_bracket", "right_bracket")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -10,14 +10,16 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_n5w4a")
 container = NodePath("HBoxContainer/InsideBracket")
+left_bracket = NodePath("HBoxContainer/LeftBracketContainer")
+right_bracket = NodePath("HBoxContainer/RightBracketContainer")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
+[node name="LeftBracketContainer" type="PanelContainer" parent="HBoxContainer"]
 layout_mode = 2
 
-[node name="LeftBracket" type="Label" parent="HBoxContainer/PanelContainer"]
+[node name="LeftBracket" type="Label" parent="HBoxContainer/LeftBracketContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 45
 text = "("
@@ -27,10 +29,10 @@ layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="PanelContainer2" type="PanelContainer" parent="HBoxContainer"]
+[node name="RightBracketContainer" type="PanelContainer" parent="HBoxContainer"]
 layout_mode = 2
 
-[node name="RightBracket" type="Label" parent="HBoxContainer/PanelContainer2"]
+[node name="RightBracket" type="Label" parent="HBoxContainer/RightBracketContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 45
 text = ")"

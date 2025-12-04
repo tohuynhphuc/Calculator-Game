@@ -25,10 +25,9 @@ func get_tree_from_expression(start_id: int = 0, type: TreeNode.NODE_TYPE = Tree
 	var root: TreeNode = TreeNode.new()
 	root.type = type
 	var i: int = start_id
-	var n: int = len(expression)
+	var n: int = expression.size()
 	while i < n:
 		var token = expression[i]
-		var node: TreeNode = TreeNode.new()
 		if token.is_valid_float():
 			root.add_child(token, TreeNode.NODE_TYPE.NUMBER)
 		elif Operators.OPERATORS.has(token):
@@ -37,12 +36,16 @@ func get_tree_from_expression(start_id: int = 0, type: TreeNode.NODE_TYPE = Tree
 			root.add_child(token, TreeNode.NODE_TYPE.FUNCTION)
 		elif token == "(":
 			var res = get_tree_from_expression(i + 1, TreeNode.NODE_TYPE.BRACKET)
+			res[0].is_closed_by_user = res[2]
 			root.add_child_node(res[0])
 			i = res[1]
 		elif token == ")":
-			return [root, i]
+			if type == TreeNode.NODE_TYPE.BRACKET:
+				return [root, i, true]
+			else: # this is a ) without any (
+				root.add_child(token, TreeNode.NODE_TYPE.OPERATOR)
 		i += 1
-	return [root, i]
+	return [root, i, false]
 
 
 func move_cursor_right(change: int = 1) -> void:
