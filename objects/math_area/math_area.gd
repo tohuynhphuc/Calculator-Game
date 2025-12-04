@@ -1,10 +1,7 @@
 extends Control
 
-@export var expression: Label
 @export var result: Label
 @export var target: Label
-
-var characters: Array[String] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -18,29 +15,23 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	var text = ""
-	for char in characters:
-		text += char
-	expression.text = text
-	GameManager.expression = characters
-	
-	if Calculator.evaluate_tokens(characters) == null:
+	if Calculator.evaluate_tokens(GameManager.expression) == null:
 		result.text = ""
 	else:
-		result.text = str(snapped(Calculator.evaluate_tokens(characters), 0.01))
+		result.text = str(snapped(Calculator.evaluate_tokens(GameManager.expression), 0.01))
 	
 
 
 func add_characters(char: String) -> void:
 	#characters.append(char)
-	characters.insert(GameManager.cursor_position, char)
+	GameManager.expression.insert(GameManager.cursor_position, char)
 
 
 func remove_characters(is_all: bool = false) -> void:
 	if is_all:
-		characters = []
+		GameManager.expression = []
 		return
-	characters.remove_at(GameManager.cursor_position - 1)
+	GameManager.expression.remove_at(GameManager.cursor_position - 1)
 
 
 func on_buttons_clicked(value: String) -> void:

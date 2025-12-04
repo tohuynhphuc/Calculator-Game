@@ -26,6 +26,8 @@ func get_tree_from_expression(start_id: int = 0, type: TreeNode.NODE_TYPE = Tree
 	root.type = type
 	var i: int = start_id
 	var n: int = expression.size()
+	print(expression)
+	print(n)
 	while i < n:
 		var token = expression[i]
 		if token.is_valid_float():

@@ -3,11 +3,10 @@
 [ext_resource type="Script" uid="uid://bomksf8o6q2j1" path="res://objects/math_area/math_area.gd" id="1_6qtjq"]
 [ext_resource type="PackedScene" uid="uid://dfyif2jubwtty" path="res://objects/maths_display/maths_display.tscn" id="2_3yat6"]
 
-[node name="MathArea" type="PanelContainer" node_paths=PackedStringArray("expression", "result", "target")]
+[node name="MathArea" type="PanelContainer" node_paths=PackedStringArray("result", "target")]
 offset_right = 800.0
 offset_bottom = 354.0
 script = ExtResource("1_6qtjq")
-expression = NodePath("MarginContainer/VBoxContainer/FullExpression/PanelContainer/Expression")
 result = NodePath("MarginContainer/VBoxContainer/FullExpression/PanelContainer3/Result")
 target = NodePath("MarginContainer/VBoxContainer/TargetNumber")
 

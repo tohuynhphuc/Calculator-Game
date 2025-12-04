@@ -127,6 +127,7 @@ static func _process_unary_and_implicit(tokens: Array) -> Array:
 	var prev = null
 
 	for t in tokens:
+		@warning_ignore("unused_variable")
 		var is_op := Operators.OPERATORS.has(t)
 		var is_number: bool = t.is_valid_float()
 		var is_ident: bool = _is_identifier(t)

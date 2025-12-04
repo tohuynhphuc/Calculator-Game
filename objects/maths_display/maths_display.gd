@@ -24,9 +24,11 @@ func display_tree() -> void:
 	for child in container.get_children():
 		container.remove_child(child)
 		child.queue_free()
+	
 	var objects = from_tree_to_nodes(GameManager.get_tree_from_expression()[0])
 	for obj in objects:
 		container.add_child(obj)
+	
 	var cursor = _cursor.instantiate()
 	insert_at_virtual_index(container, cursor, GameManager.cursor_position)
 
