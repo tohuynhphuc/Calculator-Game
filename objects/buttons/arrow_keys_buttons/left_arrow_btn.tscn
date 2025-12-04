@@ -3,7 +3,5 @@
 [ext_resource type="PackedScene" uid="uid://8h5l3r7g8np4" path="res://objects/buttons/base_btn.tscn" id="1_wmo3v"]
 [ext_resource type="Script" uid="uid://b8ug2x46ytlek" path="res://objects/buttons/arrow_keys_buttons/left_arrow_btn.gd" id="2_cb3qe"]
 
-[node name="base_btn" instance=ExtResource("1_wmo3v")]
+[node name="left_arrow_btn" instance=ExtResource("1_wmo3v")]
 script = ExtResource("2_cb3qe")
-
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

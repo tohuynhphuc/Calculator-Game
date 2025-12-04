@@ -5,5 +5,3 @@
 
 [node name="equation_btn" instance=ExtResource("1_kbvsr")]
 script = ExtResource("2_3lgat")
-
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

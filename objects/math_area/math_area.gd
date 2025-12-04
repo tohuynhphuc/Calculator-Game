@@ -10,6 +10,7 @@ var characters: Array[String] = []
 func _ready() -> void:
 	EventBus.number_button_clicked.connect(on_buttons_clicked)
 	EventBus.equation_button_clicked.connect(on_buttons_clicked)
+	EventBus.function_button_clicked.connect(on_function_buttons_clicked)
 	EventBus.delete_button_clicked.connect(on_delete_buttons_clicked)
 	
 	target.text = str(GameManager.generatedTarget)
@@ -31,18 +32,27 @@ func _process(delta: float) -> void:
 
 
 func add_characters(char: String) -> void:
-	characters.append(char)
+	#characters.append(char)
+	characters.insert(GameManager.cursor_position, char)
 
 
 func remove_characters(is_all: bool = false) -> void:
 	if is_all:
 		characters = []
 		return
-	characters.remove_at(characters.size() - 1)
+	characters.remove_at(GameManager.cursor_position - 1)
 
 
 func on_buttons_clicked(value: String) -> void:
+	print(value)
 	add_characters(value)
+
+
+func on_function_buttons_clicked(value: String) -> void:
+	add_characters(value)
+	add_characters("(")
+	add_characters(")")
+	GameManager.move_cursor_left()
 
 
 func on_delete_buttons_clicked(is_all: bool) -> void:

@@ -8,5 +8,3 @@ script = ExtResource("2_i5k8o")
 
 [node name="Label" parent="Button" index="0"]
 text = "DEL"
-
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

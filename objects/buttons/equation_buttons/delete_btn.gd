@@ -17,6 +17,10 @@ func _ready() -> void:
 
 func _on_button_pressed() -> void:
 	EventBus.delete_button_clicked.emit(type == btn_type.ALL_CLEAR)
-	
+	if type == btn_type.ALL_CLEAR:
+		GameManager.cursor_position = 0
+	else:
+		GameManager.move_cursor_left()
 	print("Button pressed " + label.text)
+	print("Cursor position " + str(GameManager.cursor_position))
 	EventBus.equation_changed.emit()

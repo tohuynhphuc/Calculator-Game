@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1jybrtb6vny7"]
+
+[ext_resource type="PackedScene" uid="uid://8h5l3r7g8np4" path="res://objects/buttons/base_btn.tscn" id="1_f56hv"]
+[ext_resource type="Script" uid="uid://c5f32d5mq4vjd" path="res://objects/buttons/function_buttons/function_btn.gd" id="2_njy3u"]
+
+[node name="function_btn" instance=ExtResource("1_f56hv")]
+script = ExtResource("2_njy3u")

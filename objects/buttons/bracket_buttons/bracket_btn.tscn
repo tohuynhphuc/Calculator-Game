@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4vdx2nrcxpln"]
+
+[ext_resource type="PackedScene" uid="uid://8h5l3r7g8np4" path="res://objects/buttons/base_btn.tscn" id="1_ewe3n"]
+[ext_resource type="Script" uid="uid://vvs5qk85b5dq" path="res://objects/buttons/bracket_buttons/bracket_btn.gd" id="2_xi4jr"]
+
+[node name="bracket_btn" instance=ExtResource("1_ewe3n")]
+script = ExtResource("2_xi4jr")

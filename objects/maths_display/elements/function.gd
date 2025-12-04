@@ -1,5 +1,5 @@
-class_name ExpressionDisplay
-extends PanelContainer
+class_name FunctionDisplay
+extends Container
 
 var elements: Array
 @export var container: Container

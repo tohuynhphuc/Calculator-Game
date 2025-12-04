@@ -1,10 +1,11 @@
-class_name NumberBtn
+class_name RightArrowBtn
 extends BaseBtn
 
-const NUMBER_BTN_SCENE = preload("res://objects/buttons/number_buttons/number_btn.tscn")
 
-static func new_btn(_value: String, _type: btn_type = btn_type.NUMBER) -> NumberBtn:
-	var new_btn: NumberBtn = NUMBER_BTN_SCENE.instantiate()
+const RIGHT_ARROW_BTN_SCENE = preload("res://objects/buttons/arrow_keys_buttons/right_arrow_btn.tscn")
+
+static func new_btn(_value: String = "->", _type: btn_type = btn_type.ARROW_RIGHT) -> RightArrowBtn:
+	var new_btn: RightArrowBtn = RIGHT_ARROW_BTN_SCENE.instantiate()
 	new_btn.set_value(_value)
 	new_btn.set_type(_type)
 	return new_btn
@@ -16,7 +17,7 @@ func _ready() -> void:
 
 
 func _on_button_pressed() -> void:
-	EventBus.number_button_clicked.emit(value)
+	EventBus.arrow_button_clicked.emit(type == btn_type.ARROW_RIGHT)
 	GameManager.move_cursor_right()
 	print("Button pressed " + label.text)
 	print("Cursor position " + str(GameManager.cursor_position))

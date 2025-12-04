@@ -5,5 +5,3 @@
 
 [node name="number_btn" instance=ExtResource("1_pgaxo")]
 script = ExtResource("2_36fk0")
-
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

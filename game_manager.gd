@@ -5,6 +5,8 @@ var minValue: int = 100
 var maxValue: int = 999
 var expression: Array[String]
 
+var cursor_position: int = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	generate_target_number()
@@ -41,3 +43,15 @@ func get_tree_from_expression(start_id: int = 0, type: TreeNode.NODE_TYPE = Tree
 			return [root, i]
 		i += 1
 	return [root, i]
+
+
+func move_cursor_right(change: int = 1) -> void:
+	cursor_position += change
+	if cursor_position > expression.size():
+		cursor_position = expression.size()
+
+
+func move_cursor_left(change: int = 1) -> void:
+	cursor_position -= change
+	if cursor_position < 0:
+		cursor_position = 0

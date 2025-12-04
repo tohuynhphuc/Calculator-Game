@@ -1,8 +1,8 @@
-class_name NumberDisplay
+class_name OperatorDisplay
 extends PanelContainer
 
 @export var label: Label
-var value: int
+var value
 var isUpdate: bool = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -15,7 +15,7 @@ func update() -> void:
 	isUpdate = false
 
 
-func set_value(number: int) -> void:
+func set_value(number) -> void:
 	value = number
 
 

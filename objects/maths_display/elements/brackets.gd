@@ -1,4 +1,5 @@
-extends Control
+class_name BracketDisplay
+extends PanelContainer
 
 var expression: Array[Control]
 @export var container: Container
@@ -19,21 +20,18 @@ func _process(delta: float) -> void:
 func update() -> void:
 	for child in container.get_children():
 		child.queue_free()
-		#child.hide()
-		#print(child.is)
-		#container.remove_child(child)
 	
 	for token in expression:
-		print(token)
-		if container.get_children().has(token):
-			print("HAS")
-			token.show()
-			container.add_child(token)
-			print("Parent: ")
-			print(token.get_parent())
-		else:
-			print("DON'T HAVE")
-			container.add_child(token)
+		#print(token)
+		#if container.get_children().has(token):
+			#print("HAS")
+			#token.show()
+			#container.add_child(token)
+			#print("Parent: ")
+			#print(token.get_parent())
+		#else:
+		#print("DON'T HAVE")
+		container.add_child(token)
 	
 	isUpdate = false
 

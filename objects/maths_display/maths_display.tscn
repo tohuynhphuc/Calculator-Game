@@ -2,8 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cjly2hqkhyll2" path="res://objects/maths_display/maths_display.gd" id="1_bjyv8"]
 
-[node name="MathsDisplay" type="Control" node_paths=PackedStringArray("container")]
-layout_mode = 3
+[node name="MathsDisplay" type="PanelContainer" node_paths=PackedStringArray("container")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -13,12 +12,7 @@ script = ExtResource("1_bjyv8")
 container = NodePath("HFlowContainer")
 
 [node name="HFlowContainer" type="HFlowContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 alignment = 1

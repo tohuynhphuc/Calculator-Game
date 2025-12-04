@@ -5,6 +5,8 @@ enum btn_type {
 	BASE,
 	NUMBER,
 	EQUATION,
+	BRACKET,
+	FUNCTION,
 	DELETE,
 	ALL_CLEAR,
 	ARROW_LEFT,

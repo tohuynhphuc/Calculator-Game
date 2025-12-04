@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwo0h5xdte11y"]
+
+[ext_resource type="Script" uid="uid://2no3i0qs8i5i" path="res://objects/maths_display/elements/operator.gd" id="1_gb8h1"]
+
+[node name="Operator" type="PanelContainer" node_paths=PackedStringArray("label")]
+offset_right = 86.0
+offset_bottom = 55.8333
+size_flags_horizontal = 0
+script = ExtResource("1_gb8h1")
+label = NodePath("Label")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -9,23 +9,28 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_n5w4a")
-container = NodePath("HFlowContainer/InsideBracket")
+container = NodePath("HBoxContainer/InsideBracket")
 
-[node name="HFlowContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
-alignment = 1
 
-[node name="LeftBracket" type="Label" parent="HFlowContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="LeftBracket" type="Label" parent="HBoxContainer/PanelContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 45
 text = "("
 
-[node name="InsideBracket" type="HBoxContainer" parent="HFlowContainer"]
+[node name="InsideBracket" type="HBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="RightBracket" type="Label" parent="HFlowContainer"]
+[node name="PanelContainer2" type="PanelContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="RightBracket" type="Label" parent="HBoxContainer/PanelContainer2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 45
 text = ")"
