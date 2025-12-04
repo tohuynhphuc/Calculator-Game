@@ -3,21 +3,16 @@ extends PanelContainer
 
 @export var label: Label
 var value: int
-var isUpdate: bool = true
+
+var is_allow_use: bool = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if isUpdate:
-		update()
+	pass
 
 func update() -> void:
 	label.text = str(value)
-	isUpdate = false
 
 
 func set_value(number: int) -> void:
 	value = number
-
-
-func need_to_update() -> void:
-	isUpdate = true

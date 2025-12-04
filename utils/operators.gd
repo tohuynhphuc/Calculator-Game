@@ -28,6 +28,10 @@ static var FUNCTIONS = {
 	"max": func(a, b): return max(a, b),
 }
 
+static var LEFT_BRACKET = "("
+static var RIGHT_BRACKET = ")"
+static var COMMA = ","
+
 static func factorial(a: int) -> int:
 	var prod = 1
 	for i in range(a):

@@ -286,6 +286,8 @@ static func evaluate_postfix(postfix: Array) -> Variant:
 			elif Operators.FUNCTIONS[token].get_argument_count() == 2:
 				var b = stack.pop_back()
 				var a = stack.pop_back()
+				if a == null or b == null:
+					return null
 				stack.append(Operators.FUNCTIONS[token].call(a, b))
 
 		else:

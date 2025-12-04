@@ -23,7 +23,6 @@ func _process(delta: float) -> void:
 
 
 func add_characters(char: String) -> void:
-	#characters.append(char)
 	GameManager.expression.insert(GameManager.cursor_position, char)
 
 
@@ -41,9 +40,9 @@ func on_buttons_clicked(value: String) -> void:
 
 func on_function_buttons_clicked(value: String) -> void:
 	add_characters(value)
+	GameManager.move_cursor_right()
 	add_characters("(")
-	add_characters(")")
-	GameManager.move_cursor_left()
+	GameManager.move_cursor_right()
 
 
 func on_delete_buttons_clicked(is_all: bool) -> void:
