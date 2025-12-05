@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="Number" load_steps=2 format=3 uid="uid://dg3qbojfx5k0"]
+
+[ext_resource type="Script" uid="uid://cr1ll1aqk4645" path="res://objects/classes/number.gd" id="1_fg8rs"]
+
+[resource]
+script = ExtResource("1_fg8rs")
+value = 0

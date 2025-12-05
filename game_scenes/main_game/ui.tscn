@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bl67wqq1fxyor"]
+[gd_scene load_steps=4 format=3 uid="uid://bl67wqq1fxyor"]
 
 [ext_resource type="PackedScene" uid="uid://ovmkfttsg6vm" path="res://objects/math_area/math_area.tscn" id="1_27fn8"]
-[ext_resource type="Script" uid="uid://cuxbnwfgdua3b" path="res://ui.gd" id="1_nltto"]
+[ext_resource type="Script" uid="uid://cuxbnwfgdua3b" path="res://game_scenes/main_game/ui.gd" id="1_nltto"]
+[ext_resource type="Script" uid="uid://bvsp6m0kduabx" path="res://game_scenes/main_game/health_bar.gd" id="2_2r32b"]
 
 [node name="UI" type="Control" node_paths=PackedStringArray("number_container", "equation_container")]
 layout_mode = 3
@@ -37,17 +38,34 @@ theme_override_constants/separation = 10
 [node name="ProgressBar" type="ProgressBar" parent="HBoxContainer/LeftPanel/LeftSide"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
+max_value = 10.0
+show_percentage = false
+script = ExtResource("2_2r32b")
 
 [node name="MathArea" parent="HBoxContainer/LeftPanel/LeftSide" instance=ExtResource("1_27fn8")]
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
 
 [node name="NumberContainer" type="HBoxContainer" parent="HBoxContainer/LeftPanel/LeftSide"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
-size_flags_stretch_ratio = 0.25
 theme_override_constants/separation = 20
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/LeftPanel/LeftSide"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/LeftPanel/LeftSide/PanelContainer"]
+layout_mode = 2
+
+[node name="SubmitBestBtn" type="Button" parent="HBoxContainer/LeftPanel/LeftSide/PanelContainer/HBoxContainer"]
+layout_mode = 2
+text = "Submit Best"
+
+[node name="SubmitCurrentBtn" type="Button" parent="HBoxContainer/LeftPanel/LeftSide/PanelContainer/HBoxContainer"]
+layout_mode = 2
+text = "Submit Current"
 
 [node name="RightPanel" type="PanelContainer" parent="HBoxContainer"]
 layout_mode = 2
@@ -76,11 +94,6 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 41
 text = "$###"
 
-[node name="GetTreeButton" type="Button" parent="HBoxContainer/RightPanel/RightSide"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 56
-text = "Print Tree"
-
 [node name="EquationContainer" type="HFlowContainer" parent="HBoxContainer/RightPanel/RightSide"]
 layout_mode = 2
 alignment = 1
@@ -88,4 +101,5 @@ alignment = 1
 [node name="ArrowKeysContainer" type="HBoxContainer" parent="HBoxContainer/RightPanel/RightSide"]
 layout_mode = 2
 
-[connection signal="pressed" from="HBoxContainer/RightPanel/RightSide/GetTreeButton" to="." method="_on_get_tree_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/LeftPanel/LeftSide/PanelContainer/HBoxContainer/SubmitBestBtn" to="." method="_on_submit_best_btn_pressed"]
+[connection signal="pressed" from="HBoxContainer/LeftPanel/LeftSide/PanelContainer/HBoxContainer/SubmitCurrentBtn" to="." method="_on_submit_current_btn_pressed"]

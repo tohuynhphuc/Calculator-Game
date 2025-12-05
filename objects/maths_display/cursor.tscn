@@ -3,6 +3,6 @@
 [node name="Cursor" type="PanelContainer"]
 
 [node name="ColorRect" type="ColorRect" parent="."]
-custom_minimum_size = Vector2(3, 10)
+custom_minimum_size = Vector2(3, 50)
 layout_mode = 2
 color = Color(0.956863, 0, 0.356863, 1)

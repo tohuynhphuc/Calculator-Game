@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Bracket" load_steps=2 format=3 uid="uid://dbbbpptggvcrp"]
+
+[ext_resource type="Script" uid="uid://bel0w0nan4qr1" path="res://objects/classes/bracket.gd" id="1_g85rg"]
+
+[resource]
+script = ExtResource("1_g85rg")
+orientation_left = true
+value = "("

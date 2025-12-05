@@ -2,19 +2,12 @@ extends Control
 
 @export var ui_controller: UI_Controller
 
-var all_buttons_arr: Array[String]
 
-var number_button_arr: Array[String] = []
-var equation_button_arr: Array[String] = ["+", "-", "*", "/", "^", "!"]
-var bracket_button_arr: Array[String] = ["(", ")"]
-var function_button_arr: Array[String] = ["sin", "cos", "tan", "max", "min"]
-
-var deck_size: int = 5
 
 
 func _ready() -> void:
 	generate_deck()
-	number_button_arr = get_k_random_buttons(deck_size)
+	GameManager.number_button_arr = get_k_random_buttons(GameManager.deck_size)
 	
 	add_buttons_to_scene()
 
@@ -25,31 +18,32 @@ func _process(delta: float) -> void:
 
 func generate_deck() -> void:
 	for i in range(50):
-		all_buttons_arr.append(str(i + 1))
+		GameManager.all_buttons_arr.append(str(i + 1))
 
 
 func get_k_random_buttons(k: int) -> Array:
 	if k <= 0:
 		return []
-	if k > all_buttons_arr.size():
-		k = all_buttons_arr.size()
+	if k > GameManager.all_buttons_arr.size():
+		k = GameManager.all_buttons_arr.size()
 
-	var temp = all_buttons_arr.duplicate()
+	var temp = GameManager.all_buttons_arr.duplicate()
 	temp.shuffle()
 
 	return temp.slice(0, k)
 
 
 func add_buttons_to_scene() -> void:
-	for i in number_button_arr.size():
-		var button = NumberBtn.new_btn(number_button_arr[i])
+	for i in GameManager.number_button_arr.size():
+		var button = NumberBtn.new_btn(GameManager.number_button_arr[i])
 		ui_controller.number_container_add_button(button)
 	
-	for i in equation_button_arr.size():
-		var button = EquationBtn.new_btn(equation_button_arr[i])
+	for i in GameManager.equation_button_arr.size():
+		var button = EquationBtn.new_btn(GameManager.equation_button_arr[i])
 		ui_controller.equation_container_add_button(button)
 	
-	ui_controller.equation_container_add_button(EquationBtn.new_btn(","))
+	for i in GameManager.comma_button_arr.size():
+		ui_controller.equation_container_add_button(EquationBtn.new_btn(GameManager.comma_button_arr[i]))
 	
 	var left_bracket = BracketBtn.new_btn("(")
 	left_bracket.set_orientation(true)
@@ -59,8 +53,8 @@ func add_buttons_to_scene() -> void:
 	right_bracket.set_orientation(false)
 	ui_controller.equation_container_add_button(right_bracket)
 	
-	for i in function_button_arr.size():
-		var button = FunctionBtn.new_btn(function_button_arr[i])
+	for i in GameManager.function_button_arr.size():
+		var button = FunctionBtn.new_btn(GameManager.function_button_arr[i])
 		ui_controller.equation_container_add_button(button)
 	
 	ui_controller.equation_container_add_button(DeleteBtn.new_btn("DEL"))

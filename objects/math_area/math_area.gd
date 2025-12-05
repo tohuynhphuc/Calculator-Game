@@ -2,6 +2,7 @@ extends Control
 
 @export var result: Label
 @export var target: Label
+@export var best_results: Label
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -10,16 +11,13 @@ func _ready() -> void:
 	EventBus.function_button_clicked.connect(on_function_buttons_clicked)
 	EventBus.delete_button_clicked.connect(on_delete_buttons_clicked)
 	
-	target.text = str(GameManager.generatedTarget)
+	target.text = str(GameManager.generated_target)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Calculator.evaluate_tokens(GameManager.expression) == null:
-		result.text = ""
-	else:
-		result.text = str(snapped(Calculator.evaluate_tokens(GameManager.expression), 0.01))
-	
+	result.text = "" if GameManager.current_results == null else str(GameManager.current_results)
+	best_results.text = "Best\n" + str(GameManager.best_results)
 
 
 func add_characters(char: String) -> void:
