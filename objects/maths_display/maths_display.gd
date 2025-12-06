@@ -77,7 +77,9 @@ func from_tree_to_nodes(root: TreeNode) -> Array:
 	for child in root.children:
 		if child.type == TreeNode.NODE_TYPE.NUMBER:
 			var number = _number.instantiate()
-			number.set_value(int(child.value))
+			print("maths_display/from_tree_to_node")
+			print(child)
+			number.set_value(int(child.value.value))
 			number.update()
 			objects.append(number)
 		
@@ -100,5 +102,8 @@ func from_tree_to_nodes(root: TreeNode) -> Array:
 			bracket.expression = inside_bracket
 			bracket.update(child.is_closed_by_user)
 			objects.append(bracket)
+		
+		else:
+			print("Unexpected child")
 	
 	return objects

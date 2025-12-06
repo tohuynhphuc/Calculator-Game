@@ -2,9 +2,6 @@ extends Control
 
 @export var ui_controller: UI_Controller
 
-
-
-
 func _ready() -> void:
 	generate_deck()
 	GameManager.number_button_arr = get_k_random_buttons(GameManager.deck_size)
@@ -17,8 +14,9 @@ func _process(delta: float) -> void:
 
 
 func generate_deck() -> void:
-	for i in range(50):
-		GameManager.all_buttons_arr.append(str(i + 1))
+	print("GENERATING DECK")
+	for dict in Parser.number_buttons:
+		GameManager.all_buttons_arr.append(Number.new(dict))
 
 
 func get_k_random_buttons(k: int) -> Array:
@@ -37,6 +35,7 @@ func add_buttons_to_scene() -> void:
 	for i in GameManager.number_button_arr.size():
 		var button = NumberBtn.new_btn(GameManager.number_button_arr[i])
 		ui_controller.number_container_add_button(button)
+		GameManager.number_button_actual_btns.append(button)
 	
 	for i in GameManager.equation_button_arr.size():
 		var button = EquationBtn.new_btn(GameManager.equation_button_arr[i])

@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+Parser="*res://utils/autoload/parser.gd"
 EventBus="*res://utils/autoload/event_bus.gd"
 GameManager="*res://utils/autoload/game_manager.gd"
 

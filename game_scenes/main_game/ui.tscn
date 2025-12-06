@@ -55,16 +55,31 @@ theme_override_constants/separation = 20
 
 [node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/LeftPanel/LeftSide"]
 layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/LeftPanel/LeftSide/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/LeftPanel/LeftSide/PanelContainer"]
 layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
-[node name="SubmitBestBtn" type="Button" parent="HBoxContainer/LeftPanel/LeftSide/PanelContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/LeftPanel/LeftSide/PanelContainer/MarginContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 50
+
+[node name="SubmitBestBtn" type="Button" parent="HBoxContainer/LeftPanel/LeftSide/PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
 text = "Submit Best"
 
-[node name="SubmitCurrentBtn" type="Button" parent="HBoxContainer/LeftPanel/LeftSide/PanelContainer/HBoxContainer"]
+[node name="SubmitCurrentBtn" type="Button" parent="HBoxContainer/LeftPanel/LeftSide/PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 40
 text = "Submit Current"
 
 [node name="RightPanel" type="PanelContainer" parent="HBoxContainer"]
@@ -101,5 +116,5 @@ alignment = 1
 [node name="ArrowKeysContainer" type="HBoxContainer" parent="HBoxContainer/RightPanel/RightSide"]
 layout_mode = 2
 
-[connection signal="pressed" from="HBoxContainer/LeftPanel/LeftSide/PanelContainer/HBoxContainer/SubmitBestBtn" to="." method="_on_submit_best_btn_pressed"]
-[connection signal="pressed" from="HBoxContainer/LeftPanel/LeftSide/PanelContainer/HBoxContainer/SubmitCurrentBtn" to="." method="_on_submit_current_btn_pressed"]
+[connection signal="pressed" from="HBoxContainer/LeftPanel/LeftSide/PanelContainer/MarginContainer/HBoxContainer/SubmitBestBtn" to="." method="_on_submit_best_btn_pressed"]
+[connection signal="pressed" from="HBoxContainer/LeftPanel/LeftSide/PanelContainer/MarginContainer/HBoxContainer/SubmitCurrentBtn" to="." method="_on_submit_current_btn_pressed"]

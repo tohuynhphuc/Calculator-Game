@@ -6,8 +6,8 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	EventBus.number_button_clicked.connect(on_buttons_clicked)
-	EventBus.equation_button_clicked.connect(on_buttons_clicked)
+	EventBus.number_button_clicked.connect(on_number_buttons_clicked)
+	EventBus.equation_button_clicked.connect(on_operator_buttons_clicked)
 	EventBus.function_button_clicked.connect(on_function_buttons_clicked)
 	EventBus.delete_button_clicked.connect(on_delete_buttons_clicked)
 	
@@ -20,20 +20,40 @@ func _process(delta: float) -> void:
 	best_results.text = "Best\n" + str(GameManager.best_results)
 
 
-func add_characters(char: String) -> void:
+func add_characters(char: Variant) -> void:
+	print("Adding characters: ", char, " at pos ", GameManager.cursor_position)
 	GameManager.expression.insert(GameManager.cursor_position, char)
+	print(GameManager.expression)
 
 
 func remove_characters(is_all: bool = false) -> void:
 	if is_all:
-		GameManager.expression = []
+		while GameManager.expression.size() > 0:
+			remove_at_pos(0)
+		# GameManager.expression = []
 		return
-	GameManager.expression.remove_at(GameManager.cursor_position - 1)
+	remove_at_pos(GameManager.cursor_position - 1)
+	#GameManager.expression.remove_at(GameManager.cursor_position - 1)
 
 
-func on_buttons_clicked(value: String) -> void:
-	print(value)
-	add_characters(value)
+func remove_at_pos(pos: int):
+	var deleted_token = GameManager.expression.get(pos)
+	if deleted_token is Number:
+		for number_btn in GameManager.number_button_actual_btns:
+			if number_btn.number_obj == deleted_token:
+				number_btn.button.disabled = false
+				break
+	GameManager.expression.remove_at(pos)
+
+
+func on_number_buttons_clicked(number: Number) -> void:
+	print("NUMBER: ", number.value)
+	add_characters(number)
+
+
+func on_operator_buttons_clicked(operator: String) -> void:
+	print(operator)
+	add_characters(operator)
 
 
 func on_function_buttons_clicked(value: String) -> void:

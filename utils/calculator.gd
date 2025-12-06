@@ -55,9 +55,9 @@ static func validate_raw_tokens(tokens: Array) -> bool:
 		var t = tokens[i]
 
 		# A number
-		if t.is_valid_float():
+		if t is Number:
 			# Look ahead: next token exists and is also a number?
-			if i + 1 < tokens.size() and tokens[i+1].is_valid_float():
+			if i + 1 < tokens.size() and tokens[i+1] is Number:
 				return false  # two consecutive numbers → invalid
 
 	return true
@@ -129,12 +129,12 @@ static func _process_unary_and_implicit(tokens: Array) -> Array:
 	for t in tokens:
 		@warning_ignore("unused_variable")
 		var is_op := Operators.OPERATORS.has(t)
-		var is_number: bool = t.is_valid_float()
+		var is_number: bool = t is Number
 		var is_ident: bool = _is_identifier(t)
 
 		# UNARY MINUS
-		if t == "-":
-			if prev == null or (Operators.OPERATORS.has(prev) or prev == "(" or prev == ","):
+		if t is String and t == "-":
+			if prev == null or (Operators.OPERATORS.has(prev) or (prev is not Number and (prev == "(" or prev == ","))):
 				out.append("u-")
 			else:
 				out.append("-")
@@ -145,7 +145,7 @@ static func _process_unary_and_implicit(tokens: Array) -> Array:
 		var insert_mul := false
 
 		if prev != null:
-			var prev_can_end = (prev.is_valid_float() or _is_identifier(prev)
+			var prev_can_end = (prev is Number or _is_identifier(prev)
 					or prev == ")" or Operators.POSTFIX.has(prev))
 			var t_can_start = (is_number or is_ident or t == "(")
 
@@ -163,11 +163,11 @@ static func _process_unary_and_implicit(tokens: Array) -> Array:
 
 
 #static func _is_identifier(t: String) -> bool:
-	#if t.is_valid_float(): return false
+	#if t is Number: return false
 	#if t in ["+", "-", "*", "/", "^", "!", "u-", "(", ")", ","]: return false
 	#return true
-static func _is_identifier(t: String) -> bool:
-	if t.is_valid_float():
+static func _is_identifier(t: Variant) -> bool:
+	if t is Number:
 		return false
 
 	# Parentheses / commas are NOT identifiers
@@ -191,7 +191,7 @@ static func infix_to_postfix(tokens: Array) -> Variant:
 	var stack = []
 
 	for token in tokens:
-		if token.is_valid_float():
+		if token is Number:
 			output.append(token)
 		
 		elif Operators.FUNCTIONS.has(token):
@@ -258,8 +258,8 @@ static func evaluate_postfix(postfix: Array) -> Variant:
 	var stack = []
 
 	for token in postfix:
-		if token.is_valid_float():
-			stack.append(float(token))
+		if token is Number:
+			stack.append(float(token.value))
 
 		elif Operators.OPERATORS.has(token):
 			var arity = Operators.OPERATORS[token].arity

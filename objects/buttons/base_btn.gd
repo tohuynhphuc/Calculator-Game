@@ -20,11 +20,11 @@ var value: String
 
 const BTN_SCENE = preload("res://objects/buttons/base_btn.tscn")
 
-static func new_btn(_value: String, _type: btn_type) -> BaseBtn:
-	var new_btn: BaseBtn = BTN_SCENE.instantiate()
-	new_btn.set_value(_value)
-	new_btn.set_type(_type)
-	return new_btn
+#static func new_btn(_value: String, _type: btn_type) -> BaseBtn:
+	#var new_btn: BaseBtn = BTN_SCENE.instantiate()
+	#new_btn.set_value(_value)
+	#new_btn.set_type(_type)
+	#return new_btn
 
 
 func set_value(new_value: String) -> void:

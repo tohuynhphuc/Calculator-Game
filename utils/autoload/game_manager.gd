@@ -3,7 +3,7 @@ extends Control
 var generated_target: int
 var min_value: int = 100
 var max_value: int = 999
-var expression: Array[String]
+var expression: Array[Variant]
 
 var max_health: int = 20
 var health: int
@@ -12,19 +12,23 @@ var cursor_position: int = 0
 var best_results: float = 0
 var current_results: Variant = 0
 
-var all_buttons_arr: Array[String]
+var all_buttons_arr: Array[Number]
+var number_button_arr: Array[Number] = []
+var number_button_actual_btns: Array[NumberBtn] = []
 
-var number_button_arr: Array[String] = []
+##### DECK #####
 var equation_button_arr: Array[String] = ["+", "-", "*", "/", "^", "!"]
 var comma_button_arr: Array[String] = [","]
 var bracket_button_arr: Array[String] = ["(", ")"]
-var function_button_arr: Array[String] = ["sin", "cos", "tan", "max", "min"]
+var function_button_arr: Array[String] = ["sin", "cos", "tan"]
 
 var deck_size: int = 5
 
 func _ready() -> void:
 	generate_target_number()
 	health = max_health
+	
+	EventBus.submit.connect(submit)
 
 
 func _process(delta: float) -> void:
@@ -54,7 +58,7 @@ func get_tree_from_expression(start_id: int = 0,
 	print(n)
 	while i < n:
 		var token = expression[i]
-		if token.is_valid_float():
+		if token is Number:
 			root.add_child(token, TreeNode.NODE_TYPE.NUMBER)
 		
 		elif Operators.OPERATORS.has(token):
@@ -77,6 +81,9 @@ func get_tree_from_expression(start_id: int = 0,
 				return [root, i, true]
 			else: # this is a ) without any (
 				root.add_child(token, TreeNode.NODE_TYPE.OPERATOR)
+		
+		else:
+			print("Unknown token")
 		i += 1
 	return [root, i, false]
 
@@ -97,4 +104,4 @@ func submit(answer: Variant) -> void:
 	if answer == null:
 		print("NULL results, can't submit")
 		return
-	health -= abs(answer - generated_target)
+	health -= floor(abs(answer - generated_target))

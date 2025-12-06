@@ -22,13 +22,9 @@ func equation_container_add_button(btn: BaseBtn) -> void:
 	equation_container.add_child(btn)
 
 
-func _on_get_tree_button_pressed() -> void:
-	GameManager.getTreeFromExpression()[0].print_tree()
-
-
 func _on_submit_best_btn_pressed() -> void:
-	GameManager.submit(GameManager.best_results)
+	EventBus.submit.emit(GameManager.best_results)
 
 
 func _on_submit_current_btn_pressed() -> void:
-	GameManager.submit(GameManager.current_results)
+	EventBus.submit.emit(GameManager.current_results)
