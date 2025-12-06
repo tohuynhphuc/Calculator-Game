@@ -3,12 +3,13 @@ extends BaseBtn
 
 const FUNCTION_BTN_SCENE = preload("res://objects/buttons/function_buttons/function_btn.tscn")
 
-static func new_btn(_value: String, _type: btn_type = btn_type.FUNCTION) -> FunctionBtn:
-	var new_btn: FunctionBtn = FUNCTION_BTN_SCENE.instantiate()
-	new_btn.set_value(_value)
-	new_btn.set_type(_type)
-	return new_btn
-	
+
+static func new_btn(_value: String, _type: ButtonType = ButtonType.FUNCTION) -> FunctionBtn:
+	var new_button: FunctionBtn = FUNCTION_BTN_SCENE.instantiate()
+	new_button.set_value(_value)
+	new_button.set_type(_type)
+	return new_button
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

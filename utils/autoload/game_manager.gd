@@ -4,34 +4,30 @@ var generated_target: int
 var min_value: int = 100
 var max_value: int = 999
 var expression: Array[Variant]
-
 var max_health: int = 20
 var health: int
-
 var cursor_position: int = 0
 var best_results: float = 0
 var current_results: Variant = 0
-
 var all_buttons_arr: Array[Number]
 var number_button_arr: Array[Number] = []
 var number_button_actual_btns: Array[NumberBtn] = []
-
 ##### DECK #####
 var equation_button_arr: Array[String] = ["+", "-", "*", "/", "^", "!"]
 var comma_button_arr: Array[String] = [","]
 var bracket_button_arr: Array[String] = ["(", ")"]
 var function_button_arr: Array[String] = ["sin", "cos", "tan"]
-
 var deck_size: int = 5
+
 
 func _ready() -> void:
 	generate_target_number()
 	health = max_health
-	
+
 	EventBus.submit.connect(submit)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	update_results()
 
 
@@ -48,8 +44,10 @@ func update_results() -> void:
 		best_results = current_results
 
 
-func get_tree_from_expression(start_id: int = 0,
-		type: TreeNode.NODE_TYPE = TreeNode.NODE_TYPE.EXPRESSION) -> Array:
+func get_tree_from_expression(
+		start_id: int = 0,
+		type: TreeNode.NodeType = TreeNode.NodeType.EXPRESSION,
+) -> Array:
 	var root: TreeNode = TreeNode.new()
 	root.type = type
 	var i: int = start_id
@@ -59,29 +57,29 @@ func get_tree_from_expression(start_id: int = 0,
 	while i < n:
 		var token = expression[i]
 		if token is Number:
-			root.add_child(token, TreeNode.NODE_TYPE.NUMBER)
-		
-		elif Operators.OPERATORS.has(token):
-			root.add_child(token, TreeNode.NODE_TYPE.OPERATOR)
-		
-		elif token == Operators.COMMA:
-			root.add_child(token, TreeNode.NODE_TYPE.OPERATOR)
-		
-		elif Operators.FUNCTIONS.has(token):
-			root.add_child(token, TreeNode.NODE_TYPE.FUNCTION)
-		
-		elif token == Operators.LEFT_BRACKET:
-			var res = get_tree_from_expression(i + 1, TreeNode.NODE_TYPE.BRACKET)
+			root.add_child(token, TreeNode.NodeType.NUMBER)
+
+		elif Operators.operators.has(token):
+			root.add_child(token, TreeNode.NodeType.OPERATOR)
+
+		elif token == Operators.comma:
+			root.add_child(token, TreeNode.NodeType.OPERATOR)
+
+		elif Operators.functions.has(token):
+			root.add_child(token, TreeNode.NodeType.FUNCTION)
+
+		elif token == Operators.left_bracket:
+			var res = get_tree_from_expression(i + 1, TreeNode.NodeType.BRACKET)
 			res[0].is_closed_by_user = res[2]
 			root.add_child_node(res[0])
 			i = res[1]
-		
-		elif token == Operators.RIGHT_BRACKET:
-			if type == TreeNode.NODE_TYPE.BRACKET:
+
+		elif token == Operators.right_bracket:
+			if type == TreeNode.NodeType.BRACKET:
 				return [root, i, true]
-			else: # this is a ) without any (
-				root.add_child(token, TreeNode.NODE_TYPE.OPERATOR)
-		
+			# this is a ) without any (
+			root.add_child(token, TreeNode.NodeType.OPERATOR)
+
 		else:
 			print("Unknown token")
 		i += 1

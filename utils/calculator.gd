@@ -1,11 +1,12 @@
 class_name Calculator
 
+
 static func evaluate(expression: String) -> Variant:
 	if expression.strip_edges() == "":
 		return null
 
 	var tokens = tokenize(expression)
-	if tokens.size() == 0:  # tokenizer failed or empty
+	if tokens.size() == 0: # tokenizer failed or empty
 		return null
 
 	var processed = _process_unary_and_implicit(tokens)
@@ -13,7 +14,7 @@ static func evaluate(expression: String) -> Variant:
 		return null
 
 	var rpn = infix_to_postfix(processed)
-	if rpn == null or rpn.size() == 0:  # invalid infix
+	if rpn == null or rpn.size() == 0: # invalid infix
 		return null
 
 	var result = evaluate_postfix(rpn)
@@ -46,7 +47,6 @@ static func evaluate_tokens(tokens: Array) -> Variant:
 	return result
 
 
-
 static func validate_raw_tokens(tokens: Array) -> bool:
 	if tokens.size() == 0:
 		return false
@@ -57,8 +57,8 @@ static func validate_raw_tokens(tokens: Array) -> bool:
 		# A number
 		if t is Number:
 			# Look ahead: next token exists and is also a number?
-			if i + 1 < tokens.size() and tokens[i+1] is Number:
-				return false  # two consecutive numbers → invalid
+			if i + 1 < tokens.size() and tokens[i + 1] is Number:
+				return false # two consecutive numbers → invalid
 
 	return true
 
@@ -79,7 +79,7 @@ static func tokenize(expr: String) -> Array:
 			continue
 
 		# --- NUMBER ---------------------------------------------------------
-		if _is_digit(c) or (c == "." and i + 1 < expr.length() and _is_digit(expr[i+1])):
+		if _is_digit(c) or (c == "." and i + 1 < expr.length() and _is_digit(expr[i + 1])):
 			var start = i
 			i += 1
 			while i < expr.length() and (_is_digit(expr[i]) or expr[i] == "."):
@@ -104,37 +104,38 @@ static func tokenize(expr: String) -> Array:
 
 		push_error("Invalid token at index %d: '%s'" % [i, c])
 		return []
-	
+
 	return tokens
 
 
 # ---- Character helpers (Godot 4) --------------------------------------------
-
 static func _is_digit(c: String) -> bool:
 	return c >= "0" and c <= "9"
 
+
 static func _is_alpha(c: String) -> bool:
 	return (c >= "a" and c <= "z") or (c >= "A" and c <= "Z")
+
 
 static func _is_alnum(c: String) -> bool:
 	return _is_alpha(c) or _is_digit(c)
 
 
 # ---- Unary minus + implicit multiplication ----------------------------------
-
 static func _process_unary_and_implicit(tokens: Array) -> Array:
 	var out: Array = []
 	var prev = null
 
 	for t in tokens:
 		@warning_ignore("unused_variable")
-		var is_op := Operators.OPERATORS.has(t)
+		var is_op := Operators.operators.has(t)
 		var is_number: bool = t is Number
 		var is_ident: bool = _is_identifier(t)
 
 		# UNARY MINUS
 		if t is String and t == "-":
-			if prev == null or (Operators.OPERATORS.has(prev) or (prev is not Number and (prev == "(" or prev == ","))):
+			if prev == null or (Operators.operators.has(prev) or
+				(prev is not Number and (prev == "(" or prev == ",")) ):
 				out.append("u-")
 			else:
 				out.append("-")
@@ -146,7 +147,7 @@ static func _process_unary_and_implicit(tokens: Array) -> Array:
 
 		if prev != null:
 			var prev_can_end = (prev is Number or _is_identifier(prev)
-					or prev == ")" or Operators.POSTFIX.has(prev))
+				or prev == ")" or Operators.postfix_operators.has(prev) )
 			var t_can_start = (is_number or is_ident or t == "(")
 
 			if prev_can_end and t_can_start:
@@ -161,11 +162,12 @@ static func _process_unary_and_implicit(tokens: Array) -> Array:
 
 	return out
 
-
-#static func _is_identifier(t: String) -> bool:
+	#static func _is_identifier(t: String) -> bool:
 	#if t is Number: return false
 	#if t in ["+", "-", "*", "/", "^", "!", "u-", "(", ")", ","]: return false
 	#return true
+
+
 static func _is_identifier(t: Variant) -> bool:
 	if t is Number:
 		return false
@@ -175,11 +177,11 @@ static func _is_identifier(t: Variant) -> bool:
 		return false
 
 	# If it matches an operator token → NOT identifier
-	if Operators.OPERATORS.has(t):
+	if Operators.operators.has(t):
 		return false
 
 	# If it matches a registered function → NOT identifier
-	if Operators.FUNCTIONS.has(t):
+	if Operators.functions.has(t):
 		return false
 
 	# Everything else is treated as identifier
@@ -193,22 +195,22 @@ static func infix_to_postfix(tokens: Array) -> Variant:
 	for token in tokens:
 		if token is Number:
 			output.append(token)
-		
-		elif Operators.FUNCTIONS.has(token):
+
+		elif Operators.functions.has(token):
 			stack.append(token)
 
-		elif Operators.OPERATORS.has(token):
+		elif Operators.operators.has(token):
 			var o1 = token
 			while stack.size() > 0:
 				var top = stack[-1]
-				if Operators.OPERATORS.has(top):
+				if Operators.operators.has(top):
 					var o2 = top
-					var p1 = Operators.OPERATORS[o1].precedence
-					var p2 = Operators.OPERATORS[o2].precedence
-					var assoc = Operators.OPERATORS[o1].assoc
+					var p1 = Operators.operators[o1].precedence
+					var p2 = Operators.operators[o2].precedence
+					var assoc = Operators.operators[o1].assoc
 
-					var cond_left  = assoc == "left"  and p1 <= p2
-					var cond_right = p1 <  p2
+					var cond_left = assoc == "left" and p1 <= p2
+					var cond_right = p1 < p2
 
 					if cond_left or cond_right:
 						output.append(stack.pop_back())
@@ -233,12 +235,12 @@ static func infix_to_postfix(tokens: Array) -> Variant:
 				output.append(top)
 
 			if not found_left_paren:
-				return null  # invalid parentheses
-			if stack.size() > 0 and Operators.FUNCTIONS.has(stack[-1]):
+				return null # invalid parentheses
+			if stack.size() > 0 and Operators.functions.has(stack[-1]):
 				output.append(stack.pop_back())
 
 		else:
-			return null  # unknown token
+			return null # unknown token
 
 	while not stack.is_empty():
 		var op = stack.pop_back()
@@ -261,34 +263,34 @@ static func evaluate_postfix(postfix: Array) -> Variant:
 		if token is Number:
 			stack.append(float(token.value))
 
-		elif Operators.OPERATORS.has(token):
-			var arity = Operators.OPERATORS[token].arity
+		elif Operators.operators.has(token):
+			var arity = Operators.operators[token].arity
 
 			if stack.size() < arity:
 				return null
 
 			if arity == 1:
 				var a = stack.pop_back()
-				stack.append(Operators.OPERATORS[token]["func"].call(a))
+				stack.append(Operators.operators[token]["func"].call(a))
 
 			elif arity == 2:
 				var b = stack.pop_back()
 				var a = stack.pop_back()
-				stack.append(Operators.OPERATORS[token]["func"].call(a, b))
+				stack.append(Operators.operators[token]["func"].call(a, b))
 
-		elif Operators.FUNCTIONS.has(token):
+		elif Operators.functions.has(token):
 			# We only support 1-2 args; extend if needed
 			if stack.size() < 1:
 				return null
-			if Operators.FUNCTIONS[token].get_argument_count() == 1:
+			if Operators.functions[token].get_argument_count() == 1:
 				var a = stack.pop_back()
-				stack.append(Operators.FUNCTIONS[token].call(a))
-			elif Operators.FUNCTIONS[token].get_argument_count() == 2:
+				stack.append(Operators.functions[token].call(a))
+			elif Operators.functions[token].get_argument_count() == 2:
 				var b = stack.pop_back()
 				var a = stack.pop_back()
 				if a == null or b == null:
 					return null
-				stack.append(Operators.FUNCTIONS[token].call(a, b))
+				stack.append(Operators.functions[token].call(a, b))
 
 		else:
 			return null

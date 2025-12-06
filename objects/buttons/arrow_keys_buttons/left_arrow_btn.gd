@@ -1,15 +1,18 @@
 class_name LeftArrowBtn
 extends BaseBtn
 
-
 const LEFT_ARROW_BTN_SCENE = preload("res://objects/buttons/arrow_keys_buttons/left_arrow_btn.tscn")
 
-static func new_btn(_value: String = "<-", _type: btn_type = btn_type.ARROW_LEFT) -> LeftArrowBtn:
-	var new_btn: LeftArrowBtn = LEFT_ARROW_BTN_SCENE.instantiate()
-	new_btn.set_value(_value)
-	new_btn.set_type(_type)
-	return new_btn
-	
+
+static func new_btn(
+		_value: String = "<-",
+		_type: ButtonType = ButtonType.ARROW_LEFT,
+) -> LeftArrowBtn:
+	var new_button: LeftArrowBtn = LEFT_ARROW_BTN_SCENE.instantiate()
+	new_button.set_value(_value)
+	new_button.set_type(_type)
+	return new_button
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -17,7 +20,7 @@ func _ready() -> void:
 
 
 func _on_button_pressed() -> void:
-	EventBus.arrow_button_clicked.emit(type == btn_type.ARROW_LEFT)
+	EventBus.arrow_button_clicked.emit(type == ButtonType.ARROW_LEFT)
 	GameManager.move_cursor_left()
 	print("Button pressed " + label.text)
 	print("Cursor position " + str(GameManager.cursor_position))

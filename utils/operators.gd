@@ -4,33 +4,29 @@ class_name Operators
 # precedence: higher = stronger binding
 # associativity: "left" or "right"
 # arity: number of operands
-
-static var OPERATORS = {
-	"+":  {"precedence": 1, "assoc": "left",  "arity": 2, "func": func(a, b): return a + b},
-	"-":  {"precedence": 1, "assoc": "left",  "arity": 2, "func": func(a, b): return a - b},
-	"*":  {"precedence": 2, "assoc": "left",  "arity": 2, "func": func(a, b): return a * b},
-	"/":  {"precedence": 2, "assoc": "left",  "arity": 2, "func": func(a, b): return a / b},
-	"^":  {"precedence": 3, "assoc": "right", "arity": 2, "func": func(a, b): return pow(a, b)},
-
-	"u-": {"precedence": 4, "assoc": "right", "arity": 1, "func": func(a): return -a},
-
-	"!":  {"precedence": 4, "assoc": "right", "arity": 1, "func": func(a): return factorial(a)},
+static var operators = {
+	"+": { "precedence": 1, "assoc": "left", "arity": 2, "func": func(a, b): return a + b },
+	"-": { "precedence": 1, "assoc": "left", "arity": 2, "func": func(a, b): return a - b },
+	"*": { "precedence": 2, "assoc": "left", "arity": 2, "func": func(a, b): return a * b },
+	"/": { "precedence": 2, "assoc": "left", "arity": 2, "func": func(a, b): return a / b },
+	"^": { "precedence": 3, "assoc": "right", "arity": 2, "func": func(a, b): return pow(a, b) },
+	"u-": { "precedence": 4, "assoc": "right", "arity": 1, "func": func(a): return -a },
+	"!": { "precedence": 4, "assoc": "right", "arity": 1, "func": func(a): return factorial(a) },
 }
-
-static var POSTFIX = ["!"]
-
+# Postfix Operators
+static var postfix_operators = ["!"]
 # Registered functions (min, max, sin, cos, tan, etc)
-static var FUNCTIONS = {
+static var functions = {
 	"sin": func(a): return sin(a),
 	"cos": func(a): return cos(a),
 	"tan": func(a): return tan(a),
 	"min": func(a, b): return min(a, b),
 	"max": func(a, b): return max(a, b),
 }
+static var left_bracket = "("
+static var right_bracket = ")"
+static var comma = ","
 
-static var LEFT_BRACKET = "("
-static var RIGHT_BRACKET = ")"
-static var COMMA = ","
 
 static func factorial(a: int) -> int:
 	var prod = 1

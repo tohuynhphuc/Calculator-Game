@@ -7,14 +7,15 @@ var is_left: bool
 var brackets_pair = {
 	"(": ")",
 	"[": "]",
-	"{": "}"
+	"{": "}",
 }
 
-static func new_btn(_value: String, _type: btn_type = btn_type.BRACKET) -> BracketBtn:
-	var new_btn: BracketBtn = BRACKET_BTN_SCENE.instantiate()
-	new_btn.set_value(_value)
-	new_btn.set_type(_type)
-	return new_btn
+
+static func new_btn(_value: String, _type: ButtonType = ButtonType.BRACKET) -> BracketBtn:
+	var new_button: BracketBtn = BRACKET_BTN_SCENE.instantiate()
+	new_button.set_value(_value)
+	new_button.set_type(_type)
+	return new_button
 
 
 func set_orientation(_is_left: bool) -> void:
