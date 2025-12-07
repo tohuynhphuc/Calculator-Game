@@ -1,7 +1,7 @@
 class_name DeleteBtn
 extends BaseBtn
 
-const DELETE_BTN_SCENE = preload("res://objects/buttons/equation_buttons/delete_btn.tscn")
+const DELETE_BTN_SCENE = preload("res://objects/buttons/operator_buttons/delete_btn.tscn")
 
 
 static func new_btn(_value: String, _type: ButtonType = ButtonType.DELETE) -> DeleteBtn:
@@ -9,11 +9,6 @@ static func new_btn(_value: String, _type: ButtonType = ButtonType.DELETE) -> De
 	new_button.set_value(_value)
 	new_button.set_type(_type)
 	return new_button
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass
 
 
 func _on_button_pressed() -> void:

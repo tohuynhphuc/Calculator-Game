@@ -87,7 +87,7 @@ func from_tree_to_nodes(root: TreeNode) -> Array:
 
 		elif child.type == TreeNode.NodeType.OPERATOR:
 			var operator = _operator.instantiate()
-			operator.value = child.value
+			operator.value = child.value.value
 			operator.update()
 			objects.append(operator)
 

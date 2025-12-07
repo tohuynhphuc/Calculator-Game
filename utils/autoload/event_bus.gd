@@ -3,7 +3,7 @@ extends Node
 @warning_ignore("unused_signal")
 signal number_button_clicked(number: Number)
 @warning_ignore("unused_signal")
-signal equation_button_clicked(value: String)
+signal operator_button_clicked(value: String)
 @warning_ignore("unused_signal")
 signal function_button_clicked(value: String)
 @warning_ignore("unused_signal")

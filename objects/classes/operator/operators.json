@@ -1,0 +1,63 @@
+[
+    {
+        "value": "+",
+        "precedence": 1,
+        "assoc": "left",
+        "arity": 2,
+        "calculate": "add"
+    },
+    {
+        "value": "-",
+        "precedence": 1,
+        "assoc": "left",
+        "arity": 2,
+        "calculate": "subtract"
+    },
+    {
+        "value": "*",
+        "precedence": 2,
+        "assoc": "left",
+        "arity": 2,
+        "calculate": "multiply"
+    },
+    {
+        "value": "/",
+        "precedence": 2,
+        "assoc": "left",
+        "arity": 2,
+        "calculate": "divide"
+    },
+    {
+        "value": "^",
+        "precedence": 3,
+        "assoc": "right",
+        "arity": 2,
+        "calculate": "power",
+		"is_locked": true
+    },
+    {
+        "value": "u-",
+        "precedence": 4,
+        "assoc": "right",
+        "arity": 1,
+        "calculate": "unary_minus",
+		"is_locked": true
+    },
+    {
+        "value": "!",
+        "precedence": 4,
+        "assoc": "right",
+        "arity": 1,
+        "is_postfix": true,
+        "calculate": "factorial",
+		"is_locked": true
+    },
+    {
+        "value": ",",
+        "precedence": 100,
+        "assoc": "right",
+        "arity": 100,
+        "calculate": "comma",
+		"is_locked": true
+    }
+]

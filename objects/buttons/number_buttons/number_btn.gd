@@ -16,11 +16,6 @@ static func new_btn(num: Number) -> NumberBtn:
 	return new_button
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass
-
-
 func _on_button_pressed() -> void:
 	EventBus.number_button_clicked.emit(number_obj)
 	button.disabled = true

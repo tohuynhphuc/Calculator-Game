@@ -128,13 +128,12 @@ static func _process_unary_and_implicit(tokens: Array) -> Array:
 
 	for t in tokens:
 		@warning_ignore("unused_variable")
-		var is_op := Operators.operators.has(t)
+		var is_op := t is Operator
 		var is_number: bool = t is Number
-		var is_ident: bool = _is_identifier(t)
 
 		# UNARY MINUS
 		if t is String and t == "-":
-			if prev == null or (Operators.operators.has(prev) or
+			if prev == null or (prev is Operator or
 				(prev is not Number and (prev == "(" or prev == ",")) ):
 				out.append("u-")
 			else:
@@ -146,12 +145,12 @@ static func _process_unary_and_implicit(tokens: Array) -> Array:
 		var insert_mul := false
 
 		if prev != null:
-			var prev_can_end = (prev is Number or _is_identifier(prev)
-				or prev == ")" or Operators.postfix_operators.has(prev) )
-			var t_can_start = (is_number or is_ident or t == "(")
+			var prev_can_end = (prev is Number or (prev is not Operator and prev == ")")
+				or (prev is Operator and prev.is_postfix == true) )
+			var t_can_start = (is_number or (t is not Operator and t == "("))
 
 			if prev_can_end and t_can_start:
-				if not (_is_identifier(prev) and t == "("):
+				if not t == "(":
 					insert_mul = true
 
 		if insert_mul:
@@ -168,26 +167,20 @@ static func _process_unary_and_implicit(tokens: Array) -> Array:
 	#return true
 
 
-static func _is_identifier(t: Variant) -> bool:
-	if t is Number:
-		return false
-
-	# Parentheses / commas are NOT identifiers
-	if t == "(" or t == ")" or t == ",":
-		return false
-
-	# If it matches an operator token → NOT identifier
-	if Operators.operators.has(t):
-		return false
-
-	# If it matches a registered function → NOT identifier
-	if Operators.functions.has(t):
-		return false
-
-	# Everything else is treated as identifier
-	return true
-
-
+# static func _is_identifier(t: Variant) -> bool:
+# 	if t is Number:
+# 		return false
+# 	# Parentheses / commas are NOT identifiers
+# 	if  t == "(" or t == ")" or t == ",":
+# 		return false
+# 	# If it matches an operator token → NOT identifier
+# 	if t is Operator:
+# 		return false
+# 	# If it matches a registered function → NOT identifier
+# 	if Operators.functions.has(t):
+# 		return false
+# 	# Everything else is treated as identifier
+# 	return true
 static func infix_to_postfix(tokens: Array) -> Variant:
 	var output = []
 	var stack = []
@@ -199,15 +192,15 @@ static func infix_to_postfix(tokens: Array) -> Variant:
 		elif Operators.functions.has(token):
 			stack.append(token)
 
-		elif Operators.operators.has(token):
+		elif token is Operator:
 			var o1 = token
 			while stack.size() > 0:
 				var top = stack[-1]
-				if Operators.operators.has(top):
+				if top is Operator:
 					var o2 = top
-					var p1 = Operators.operators[o1].precedence
-					var p2 = Operators.operators[o2].precedence
-					var assoc = Operators.operators[o1].assoc
+					var p1 = o1.precedence
+					var p2 = o2.precedence
+					var assoc = o1.associativity
 
 					var cond_left = assoc == "left" and p1 <= p2
 					var cond_right = p1 < p2
@@ -244,10 +237,11 @@ static func infix_to_postfix(tokens: Array) -> Variant:
 
 	while not stack.is_empty():
 		var op = stack.pop_back()
-		if op == "(":
-			continue # ignore not closed parentheses (considered valid)
-		elif op == ")":
-			return null
+		if op is not Operator:
+			if op == "(":
+				continue # ignore not closed parentheses (considered valid)
+			elif op == ")":
+				return null
 		output.append(op)
 
 	return output
@@ -263,20 +257,20 @@ static func evaluate_postfix(postfix: Array) -> Variant:
 		if token is Number:
 			stack.append(float(token.value))
 
-		elif Operators.operators.has(token):
-			var arity = Operators.operators[token].arity
+		elif token is Operator:
+			var arity = token.arity
 
 			if stack.size() < arity:
 				return null
 
 			if arity == 1:
 				var a = stack.pop_back()
-				stack.append(Operators.operators[token]["func"].call(a))
+				stack.append(token.calculate_func.call(a))
 
 			elif arity == 2:
 				var b = stack.pop_back()
 				var a = stack.pop_back()
-				stack.append(Operators.operators[token]["func"].call(a, b))
+				stack.append(token.calculate_func.call(a, b))
 
 		elif Operators.functions.has(token):
 			# We only support 1-2 args; extend if needed

@@ -10,10 +10,12 @@ var cursor_position: int = 0
 var best_results: float = 0
 var current_results: Variant = 0
 var all_buttons_arr: Array[Number]
+##### DECK #####
 var number_button_arr: Array[Number] = []
 var number_button_actual_btns: Array[NumberBtn] = []
-##### DECK #####
-var equation_button_arr: Array[String] = ["+", "-", "*", "/", "^", "!"]
+##### OPERATOR #####
+var operator_button_arr: Array[Operator] = []
+# var operator_button_actual_btns: Array[OperatorBtn] = []
 var comma_button_arr: Array[String] = [","]
 var bracket_button_arr: Array[String] = ["(", ")"]
 var function_button_arr: Array[String] = ["sin", "cos", "tan"]
@@ -59,7 +61,7 @@ func get_tree_from_expression(
 		if token is Number:
 			root.add_child(token, TreeNode.NodeType.NUMBER)
 
-		elif Operators.operators.has(token):
+		elif token is Operator:
 			root.add_child(token, TreeNode.NodeType.OPERATOR)
 
 		elif token == Operators.comma:

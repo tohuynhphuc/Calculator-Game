@@ -4,17 +4,17 @@ class_name Operators
 # precedence: higher = stronger binding
 # associativity: "left" or "right"
 # arity: number of operands
-static var operators = {
-	"+": { "precedence": 1, "assoc": "left", "arity": 2, "func": func(a, b): return a + b },
-	"-": { "precedence": 1, "assoc": "left", "arity": 2, "func": func(a, b): return a - b },
-	"*": { "precedence": 2, "assoc": "left", "arity": 2, "func": func(a, b): return a * b },
-	"/": { "precedence": 2, "assoc": "left", "arity": 2, "func": func(a, b): return a / b },
-	"^": { "precedence": 3, "assoc": "right", "arity": 2, "func": func(a, b): return pow(a, b) },
-	"u-": { "precedence": 4, "assoc": "right", "arity": 1, "func": func(a): return -a },
-	"!": { "precedence": 4, "assoc": "right", "arity": 1, "func": func(a): return factorial(a) },
-}
-# Postfix Operators
-static var postfix_operators = ["!"]
+# static var operators = {
+# 	"+": { "precedence": 1, "assoc": "left", "arity": 2, "func": func(a, b): return a + b },
+# 	"-": { "precedence": 1, "assoc": "left", "arity": 2, "func": func(a, b): return a - b },
+# 	"*": { "precedence": 2, "assoc": "left", "arity": 2, "func": func(a, b): return a * b },
+# 	"/": { "precedence": 2, "assoc": "left", "arity": 2, "func": func(a, b): return a / b },
+# 	"^": { "precedence": 3, "assoc": "right", "arity": 2, "func": func(a, b): return pow(a, b) },
+# 	"u-": { "precedence": 4, "assoc": "right", "arity": 1, "func": func(a): return -a },
+# 	"!": { "precedence": 4, "assoc": "right", "arity": 1, "func": func(a): return factorial(a) },
+# }
+# # Postfix Operators
+# static var postfix_operators = ["!"]
 # Registered functions (min, max, sin, cos, tan, etc)
 static var functions = {
 	"sin": func(a): return sin(a),

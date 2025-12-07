@@ -29,20 +29,3 @@ func add_child_node(node: TreeNode) -> void:
 
 func remove_child(id) -> void:
 	children.remove_at(id)
-
-	#func add_child_at_index(id: int, node: TreeNode, start: int = 0):
-	#if id == 0:
-	#
-	#var cur: int = start
-	#for child in children:
-	#
-	#cur += 1
-
-
-func print_tree() -> void:
-	print(value)
-	print("START")
-	for child in children:
-		print("-----")
-		child.print_tree()
-	print("END")

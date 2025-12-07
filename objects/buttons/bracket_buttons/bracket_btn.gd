@@ -22,13 +22,9 @@ func set_orientation(_is_left: bool) -> void:
 	is_left = _is_left
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass
-
-
 func _on_button_pressed() -> void:
-	EventBus.equation_button_clicked.emit(value)
+	# TODO: Brackets currently calling operator_button_clicked -> add bracket_button_clicked
+	EventBus.operator_button_clicked.emit(value)
 	GameManager.move_cursor_right()
 	print("Button pressed " + label.text)
 	print("Cursor position " + str(GameManager.cursor_position))

@@ -4,7 +4,7 @@ extends Control
 enum ButtonType {
 	BASE,
 	NUMBER,
-	EQUATION,
+	OPERATOR,
 	BRACKET,
 	FUNCTION,
 	DELETE,
@@ -19,11 +19,6 @@ const BTN_SCENE = preload("res://objects/buttons/base_btn.tscn")
 
 var type: ButtonType
 var value: String
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

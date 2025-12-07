@@ -8,7 +8,7 @@ extends Control
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	EventBus.number_button_clicked.connect(on_number_buttons_clicked)
-	EventBus.equation_button_clicked.connect(on_operator_buttons_clicked)
+	EventBus.operator_button_clicked.connect(on_operator_buttons_clicked)
 	EventBus.function_button_clicked.connect(on_function_buttons_clicked)
 	EventBus.delete_button_clicked.connect(on_delete_buttons_clicked)
 
@@ -50,8 +50,8 @@ func on_number_buttons_clicked(number: Number) -> void:
 	add_characters(number)
 
 
-func on_operator_buttons_clicked(operator: String) -> void:
-	print(operator)
+func on_operator_buttons_clicked(operator: Operator) -> void:
+	print("OPERATOR: ", operator.value)
 	add_characters(operator)
 
 
