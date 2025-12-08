@@ -109,7 +109,7 @@ func from_tree_to_nodes(root: TreeNode) -> Array:
 		# This is a bracket that doesn't have content -> treat it like a normal operator
 		elif child.type == TreeNode.NodeType.BRACKET:
 			var operator = _operator.instantiate()
-			operator.value = child.value
+			operator.value = child.value.value
 			operator.update()
 			objects.append(operator)
 
