@@ -132,12 +132,21 @@ static func _process_unary_and_implicit(tokens: Array) -> Array:
 		var is_number: bool = t is Number
 
 		# UNARY MINUS
-		if t is String and t == "-":
+		if t is Operator and t.value == "-":
 			if prev == null or (prev is Operator or
-				(prev is not Number and (prev == "(" or prev == ",")) ):
-				out.append("u-")
+				(prev is not Number and ((prev is Bracket and
+							prev.orientation_left ) or prev is Comma ) ) ):
+				# Look through GameManager.operator_button_arr and find unary minus
+				for operator in GameManager.operator_button_arr:
+					if operator.value == "u-":
+						out.append(operator)
+						break
 			else:
-				out.append("-")
+				# Look through GameManager.operator_button_arr and find minus
+				for operator in GameManager.operator_button_arr:
+					if operator.value == "-":
+						out.append(operator)
+						break
 			prev = t
 			continue
 
@@ -145,12 +154,12 @@ static func _process_unary_and_implicit(tokens: Array) -> Array:
 		var insert_mul := false
 
 		if prev != null:
-			var prev_can_end = (prev is Number or (prev is not Operator and prev == ")")
+			var prev_can_end = (prev is Number or (prev is Bracket and not prev.orientation_left)
 				or (prev is Operator and prev.is_postfix == true) )
-			var t_can_start = (is_number or (t is not Operator and t == "("))
+			var t_can_start = (is_number or (t is Bracket and t.orientation_left))
 
 			if prev_can_end and t_can_start:
-				if not t == "(":
+				if not (t is Bracket and t.orientation_left):
 					insert_mul = true
 
 		if insert_mul:
@@ -213,16 +222,16 @@ static func infix_to_postfix(tokens: Array) -> Variant:
 					break
 			stack.append(o1)
 
-		elif token == ",":
+		elif token is Comma:
 			pass
-		elif token == "(":
+		elif token is Bracket and token.orientation_left:
 			stack.append(token)
 
-		elif token == ")":
+		elif token is Bracket and not token.orientation_left:
 			var found_left_paren = false
 			while stack.size() > 0:
 				var top = stack.pop_back()
-				if top == "(":
+				if top is Bracket and top.orientation_left:
 					found_left_paren = true
 					break
 				output.append(top)
@@ -237,10 +246,10 @@ static func infix_to_postfix(tokens: Array) -> Variant:
 
 	while not stack.is_empty():
 		var op = stack.pop_back()
-		if op is not Operator:
-			if op == "(":
+		if op is Bracket:
+			if op.orientation_left:
 				continue # ignore not closed parentheses (considered valid)
-			elif op == ")":
+			elif not op.orientation_left:
 				return null
 		output.append(op)
 

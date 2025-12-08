@@ -17,7 +17,7 @@ var number_button_actual_btns: Array[NumberBtn] = []
 var operator_button_arr: Array[Operator] = []
 # var operator_button_actual_btns: Array[OperatorBtn] = []
 var comma_button_arr: Array[String] = [","]
-var bracket_button_arr: Array[String] = ["(", ")"]
+var bracket_button_arr: Array[Bracket] = []
 var function_button_arr: Array[String] = ["sin", "cos", "tan"]
 var deck_size: int = 5
 
@@ -64,23 +64,23 @@ func get_tree_from_expression(
 		elif token is Operator:
 			root.add_child(token, TreeNode.NodeType.OPERATOR)
 
-		elif token == Operators.comma:
+		elif token is Comma and token == Operators.comma:
 			root.add_child(token, TreeNode.NodeType.OPERATOR)
 
 		elif Operators.functions.has(token):
 			root.add_child(token, TreeNode.NodeType.FUNCTION)
 
-		elif token == Operators.left_bracket:
-			var res = get_tree_from_expression(i + 1, TreeNode.NodeType.BRACKET)
+		elif token is Bracket and token.value == Operators.left_bracket:
+			var res = get_tree_from_expression(i + 1, TreeNode.NodeType.INSIDE_BRACKET)
 			res[0].is_closed_by_user = res[2]
 			root.add_child_node(res[0])
 			i = res[1]
 
-		elif token == Operators.right_bracket:
-			if type == TreeNode.NodeType.BRACKET:
+		elif token is Bracket and token.value == Operators.right_bracket:
+			if type == TreeNode.NodeType.INSIDE_BRACKET:
 				return [root, i, true]
 			# this is a ) without any (
-			root.add_child(token, TreeNode.NodeType.OPERATOR)
+			root.add_child(token, TreeNode.NodeType.BRACKET)
 
 		else:
 			print("Unknown token")

@@ -9,6 +9,7 @@ extends Control
 func _ready() -> void:
 	EventBus.number_button_clicked.connect(on_number_buttons_clicked)
 	EventBus.operator_button_clicked.connect(on_operator_buttons_clicked)
+	EventBus.bracket_button_clicked.connect(on_bracket_buttons_clicked)
 	EventBus.function_button_clicked.connect(on_function_buttons_clicked)
 	EventBus.delete_button_clicked.connect(on_delete_buttons_clicked)
 
@@ -48,6 +49,11 @@ func remove_at_pos(pos: int = 0):
 func on_number_buttons_clicked(number: Number) -> void:
 	print("NUMBER: ", number.value)
 	add_characters(number)
+
+
+func on_bracket_buttons_clicked(bracket: Bracket) -> void:
+	print("BRACKET: ", bracket.value)
+	add_characters(bracket)
 
 
 func on_operator_buttons_clicked(operator: Operator) -> void:

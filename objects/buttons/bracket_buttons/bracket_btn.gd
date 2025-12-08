@@ -4,27 +4,30 @@ extends BaseBtn
 const BRACKET_BTN_SCENE = preload("res://objects/buttons/bracket_buttons/bracket_btn.tscn")
 
 var is_left: bool
-var brackets_pair = {
-	"(": ")",
-	"[": "]",
-	"{": "}",
-}
+var bracket_obj: Bracket
 
 
-static func new_btn(_value: String, _type: ButtonType = ButtonType.BRACKET) -> BracketBtn:
+# var brackets_pair = {
+# 	"(": ")",
+# 	"[": "]",
+# 	"{": "}",
+# }
+static func new_btn(brac: Bracket) -> BracketBtn:
 	var new_button: BracketBtn = BRACKET_BTN_SCENE.instantiate()
-	new_button.set_value(_value)
-	new_button.set_type(_type)
+	new_button.set_value(brac.value)
+	new_button.set_type(BaseBtn.ButtonType.BRACKET)
+	new_button.set_orientation_left(brac.orientation_left)
+	new_button.bracket_obj = brac
 	return new_button
 
 
-func set_orientation(_is_left: bool) -> void:
+func set_orientation_left(_is_left: bool) -> void:
 	is_left = _is_left
 
 
 func _on_button_pressed() -> void:
 	# TODO: Brackets currently calling operator_button_clicked -> add bracket_button_clicked
-	EventBus.operator_button_clicked.emit(value)
+	EventBus.bracket_button_clicked.emit(bracket_obj)
 	GameManager.move_cursor_right()
 	print("Button pressed " + label.text)
 	print("Cursor position " + str(GameManager.cursor_position))

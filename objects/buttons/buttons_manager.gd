@@ -19,6 +19,10 @@ func generate_deck() -> void:
 	for dict in Parser.operators_buttons:
 		GameManager.operator_button_arr.append(Operator.new(dict))
 
+	print("GENERATE BRACKETS")
+	GameManager.bracket_button_arr.append(Bracket.new(true, "("))
+	GameManager.bracket_button_arr.append(Bracket.new(false, ")"))
+
 
 func get_k_random_buttons(k: int) -> Array:
 	if k <= 0:
@@ -43,6 +47,7 @@ func add_buttons_to_scene() -> void:
 		if not GameManager.operator_button_arr[i].is_locked:
 			var button = OperatorBtn.new_btn(GameManager.operator_button_arr[i])
 			ui_controller.equation_container_add_button(button)
+			# Don't need this
 			# GameManager.operator_button_actual_btns.append(button)
 
 	for i in GameManager.operator_button_arr.size():
@@ -51,13 +56,9 @@ func add_buttons_to_scene() -> void:
 				OperatorBtn.new_btn(GameManager.operator_button_arr[i]),
 			)
 
-	var left_bracket = BracketBtn.new_btn("(")
-	left_bracket.set_orientation(true)
-	ui_controller.equation_container_add_button(left_bracket)
-
-	var right_bracket = BracketBtn.new_btn(")")
-	right_bracket.set_orientation(false)
-	ui_controller.equation_container_add_button(right_bracket)
+	for i in GameManager.bracket_button_arr.size():
+		var button = BracketBtn.new_btn(GameManager.bracket_button_arr[i])
+		ui_controller.equation_container_add_button(button)
 
 	for i in GameManager.function_button_arr.size():
 		var button = FunctionBtn.new_btn(GameManager.function_button_arr[i])
